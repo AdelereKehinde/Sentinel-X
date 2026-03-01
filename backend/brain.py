@@ -6,6 +6,11 @@ load_dotenv()
 
 API_KEY = os.getenv("OPENROUTER_API_KEY")
 MODEL = os.getenv("MODEL")
+# allow users to control token budget; defaults to a safe value to avoid 402 errors
+try:
+    MAX_TOKENS = int(os.getenv("MAX_TOKENS", "2000"))
+except ValueError:
+    MAX_TOKENS = 2000
 
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
@@ -33,6 +38,8 @@ def ask_brain(user_input: str) -> str:
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": user_input},
         ],
+        # limit tokens to avoid credit errors; can be overridden via env var
+        "max_tokens": MAX_TOKENS,
     }
 
     try:
@@ -49,8 +56,12 @@ def ask_brain(user_input: str) -> str:
 
     if response.status_code >= 400:
         error_message = result.get("error", {}).get("message") or result.get("message")
+        # add hint for common token/credit problem
+        hint = ""
+        if response.status_code == 402:
+            hint = " (try lowering MAX_TOKENS or adding credits at https://openrouter.ai/settings/credits)"
         raise RuntimeError(
-            f"Brain provider request failed (status {response.status_code}): {error_message or 'Unknown error'}"
+            f"Brain provider request failed (status {response.status_code}): {error_message or 'Unknown error'}{hint}"
         )
 
     choices = result.get("choices")
