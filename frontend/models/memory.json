@@ -2,855 +2,1391 @@
     "users": [],
     "logs": [
         {
-            "event": "Sentinel said: Awaiting your command.",
-            "time": "2026-03-02 01:51:24"
+            "event": "All systems are running normally.",
+            "time": "2026-03-02 12:24:35"
         },
         {
-            "event": "Idle thought: Awaiting your command.",
-            "time": "2026-03-02 01:51:24"
-        },
-        {
-            "event": "Sentinel said: I am monitoring the environment.",
-            "time": "2026-03-02 01:51:54"
-        },
-        {
-            "event": "Idle thought: I am monitoring the environment.",
-            "time": "2026-03-02 01:51:54"
-        },
-        {
-            "event": "Sentinel said: Listening.",
-            "time": "2026-03-02 01:52:12"
-        },
-        {
-            "event": "Wake word detected",
-            "time": "2026-03-02 01:52:12"
-        },
-        {
-            "event": "Sentinel said: Listening.",
-            "time": "2026-03-02 01:52:12"
-        },
-        {
-            "event": "Wake word detected",
-            "time": "2026-03-02 01:52:12"
-        },
-        {
-            "event": "Sentinel said: All systems are running normally.",
-            "time": "2026-03-02 01:52:25"
+            "event": "All systems are running normally.",
+            "time": "2026-03-02 12:24:35"
         },
         {
             "event": "Idle thought: All systems are running normally.",
-            "time": "2026-03-02 01:52:25"
-        },
-        {
-            "event": "Voice loop error: [WinError 10053] An established connection was aborted by the software in your host machine",
-            "time": "2026-03-02 01:52:38"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 01:52:44"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 01:52:44"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 01:52:46"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 01:52:46"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 01:52:52"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 01:52:52"
-        },
-        {
-            "event": "Sentinel said: I am learning from our interactions.",
-            "time": "2026-03-02 01:52:55"
-        },
-        {
-            "event": "Idle thought: I am learning from our interactions.",
-            "time": "2026-03-02 01:52:55"
-        },
-        {
-            "event": "Sentinel said: It is quiet here.",
-            "time": "2026-03-02 01:53:26"
-        },
-        {
-            "event": "Idle thought: It is quiet here.",
-            "time": "2026-03-02 01:53:26"
-        },
-        {
-            "event": "Sentinel said: It is quiet here.",
-            "time": "2026-03-02 02:05:40"
-        },
-        {
-            "event": "Idle thought: It is quiet here.",
-            "time": "2026-03-02 02:05:40"
-        },
-        {
-            "event": "Sentinel said: My name is Sentinel. Say Sentinel to wake me up.",
-            "time": "2026-03-02 02:05:44"
-        },
-        {
-            "event": "Sentinel said: My name is Sentinel. I am online and ready for your command.",
-            "time": "2026-03-02 02:05:51"
-        },
-        {
-            "event": "Sentinel said: My name is Sentinel. I am online and ready for your command.",
-            "time": "2026-03-02 02:05:52"
-        },
-        {
-            "event": "Sentinel said: My name is Sentinel. I am online and ready for your command.",
-            "time": "2026-03-02 02:05:52"
-        },
-        {
-            "event": "Sentinel said: It is quiet here.",
-            "time": "2026-03-02 02:06:10"
-        },
-        {
-            "event": "Idle thought: It is quiet here.",
-            "time": "2026-03-02 02:06:10"
-        },
-        {
-            "event": "Sentinel said: My name is Sentinel. I am online and listening.",
-            "time": "2026-03-02 02:12:02"
-        },
-        {
-            "event": "Sentinel said: I am learning from our interactions.",
-            "time": "2026-03-02 02:12:23"
-        },
-        {
-            "event": "Idle thought: I am learning from our interactions.",
-            "time": "2026-03-02 02:12:23"
+            "time": "2026-03-02 12:24:35"
         },
         {
             "event": "User said: hello",
-            "time": "2026-03-02 02:12:36"
+            "time": "2026-03-02 12:24:44"
         },
         {
-            "event": "Sentinel said: My brain server is not reachable.",
-            "time": "2026-03-02 02:12:37"
+            "event": "Hello\u2014I'm Sentinel, your desktop AI assistant.  \nWhat would you like to do next (open an app, find a file, set a reminder, troubleshoot something, or automate a task)?",
+            "time": "2026-03-02 12:24:51"
         },
         {
-            "event": "User said: mad",
-            "time": "2026-03-02 02:12:46"
+            "event": "Hello\u2014I'm Sentinel, your desktop AI assistant.  \nWhat would you like to do next (open an app, find a file, set a reminder, troubleshoot something, or automate a task)?",
+            "time": "2026-03-02 12:24:51"
         },
         {
-            "event": "Sentinel said: My brain server is not reachable.",
-            "time": "2026-03-02 02:12:46"
+            "event": "Awaiting your command.",
+            "time": "2026-03-02 12:25:05"
         },
         {
-            "event": "User said: open app notepad",
-            "time": "2026-03-02 02:12:56"
+            "event": "Awaiting your command.",
+            "time": "2026-03-02 12:25:05"
         },
         {
-            "event": "Sentinel said: Opening notepad",
-            "time": "2026-03-02 02:12:56"
+            "event": "Idle thought: Awaiting your command.",
+            "time": "2026-03-02 12:25:05"
         },
         {
-            "event": "User said: open documents",
-            "time": "2026-03-02 02:13:02"
+            "event": "All systems are running normally.",
+            "time": "2026-03-02 12:35:48"
         },
         {
-            "event": "Sentinel said: Opening C:\\Users\\Devoyager\\Documents",
-            "time": "2026-03-02 02:13:03"
-        },
-        {
-            "event": "Sentinel said: It is quiet here.",
-            "time": "2026-03-02 02:13:33"
-        },
-        {
-            "event": "Idle thought: It is quiet here.",
-            "time": "2026-03-02 02:13:33"
-        },
-        {
-            "event": "Sentinel said: All systems are running normally.",
-            "time": "2026-03-02 02:14:03"
+            "event": "All systems are running normally.",
+            "time": "2026-03-02 12:35:48"
         },
         {
             "event": "Idle thought: All systems are running normally.",
-            "time": "2026-03-02 02:14:03"
+            "time": "2026-03-02 12:35:48"
         },
         {
-            "event": "Sentinel said: It is quiet here.",
-            "time": "2026-03-02 02:14:34"
+            "event": "Hello\u2014I'm Sentinel, your desktop AI assistant.  \nWhat would you like to do next (open an app, find a file, set a reminder, troubleshoot something, or automate a task)?",
+            "time": "2026-03-02 12:35:48"
         },
         {
-            "event": "Idle thought: It is quiet here.",
-            "time": "2026-03-02 02:14:34"
+            "event": "Hello\u2014I'm Sentinel, your desktop AI assistant.  \nWhat would you like to do next (open an app, find a file, set a reminder, troubleshoot something, or automate a task)?",
+            "time": "2026-03-02 12:35:48"
         },
         {
-            "event": "Sentinel said: I am monitoring the environment.",
-            "time": "2026-03-02 02:15:04"
+            "event": "Awaiting your command.",
+            "time": "2026-03-02 12:35:48"
         },
         {
-            "event": "Idle thought: I am monitoring the environment.",
-            "time": "2026-03-02 02:15:04"
-        },
-        {
-            "event": "Sentinel said: All systems are running normally.",
-            "time": "2026-03-02 02:15:34"
-        },
-        {
-            "event": "Idle thought: All systems are running normally.",
-            "time": "2026-03-02 02:15:34"
-        },
-        {
-            "event": "Sentinel said: It is quiet here.",
-            "time": "2026-03-02 02:16:05"
-        },
-        {
-            "event": "Idle thought: It is quiet here.",
-            "time": "2026-03-02 02:16:05"
-        },
-        {
-            "event": "Sentinel said: All systems are running normally.",
-            "time": "2026-03-02 02:16:35"
-        },
-        {
-            "event": "Idle thought: All systems are running normally.",
-            "time": "2026-03-02 02:16:35"
-        },
-        {
-            "event": "Sentinel said: Awaiting your command.",
-            "time": "2026-03-02 02:17:05"
+            "event": "Awaiting your command.",
+            "time": "2026-03-02 12:35:48"
         },
         {
             "event": "Idle thought: Awaiting your command.",
-            "time": "2026-03-02 02:17:05"
+            "time": "2026-03-02 12:35:48"
         },
         {
-            "event": "Sentinel said: All systems are running normally.",
-            "time": "2026-03-02 02:17:35"
+            "event": "My name is Sentinel. I am online and listening.",
+            "time": "2026-03-02 12:36:10"
         },
         {
-            "event": "Idle thought: All systems are running normally.",
-            "time": "2026-03-02 02:17:35"
-        },
-        {
-            "event": "Voice loop error: [WinError 10053] An established connection was aborted by the software in your host machine",
-            "time": "2026-03-02 02:17:50"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 02:17:52"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 02:17:54"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 02:17:55"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 02:17:59"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 02:18:05"
-        },
-        {
-            "event": "Sentinel said: I am learning from our interactions.",
-            "time": "2026-03-02 02:18:06"
-        },
-        {
-            "event": "Idle thought: I am learning from our interactions.",
-            "time": "2026-03-02 02:18:06"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 02:18:10"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 02:18:12"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 02:18:20"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 02:18:23"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 02:18:26"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 02:18:29"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 02:18:35"
-        },
-        {
-            "event": "Sentinel said: All systems are running normally.",
-            "time": "2026-03-02 02:18:36"
-        },
-        {
-            "event": "Idle thought: All systems are running normally.",
-            "time": "2026-03-02 02:18:36"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 02:18:40"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 02:18:42"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 02:18:47"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 02:18:49"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 02:18:54"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 02:18:57"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 02:19:01"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 02:19:02"
-        },
-        {
-            "event": "Sentinel said: I am learning from our interactions.",
-            "time": "2026-03-02 02:19:06"
-        },
-        {
-            "event": "Idle thought: I am learning from our interactions.",
-            "time": "2026-03-02 02:19:06"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 02:19:17"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 02:19:20"
-        },
-        {
-            "event": "Voice loop error: recognition connection failed: [Errno 11001] getaddrinfo failed",
-            "time": "2026-03-02 02:19:23"
-        },
-        {
-            "event": "Sentinel said: All systems are running normally.",
-            "time": "2026-03-02 02:19:37"
-        },
-        {
-            "event": "Idle thought: All systems are running normally.",
-            "time": "2026-03-02 02:19:37"
-        },
-        {
-            "event": "Sentinel said: Awaiting your command.",
-            "time": "2026-03-02 02:20:08"
-        },
-        {
-            "event": "Idle thought: Awaiting your command.",
-            "time": "2026-03-02 02:20:08"
-        },
-        {
-            "event": "Sentinel said: It is quiet here.",
-            "time": "2026-03-02 02:20:39"
-        },
-        {
-            "event": "Idle thought: It is quiet here.",
-            "time": "2026-03-02 02:20:39"
-        },
-        {
-            "event": "Sentinel said: I am learning from our interactions.",
-            "time": "2026-03-02 02:21:09"
-        },
-        {
-            "event": "Idle thought: I am learning from our interactions.",
-            "time": "2026-03-02 02:21:09"
-        },
-        {
-            "event": "Sentinel said: I am monitoring the environment.",
-            "time": "2026-03-02 02:21:39"
-        },
-        {
-            "event": "Idle thought: I am monitoring the environment.",
-            "time": "2026-03-02 02:21:39"
-        },
-        {
-            "event": "Sentinel said: Awaiting your command.",
-            "time": "2026-03-02 02:22:10"
-        },
-        {
-            "event": "Idle thought: Awaiting your command.",
-            "time": "2026-03-02 02:22:10"
-        },
-        {
-            "event": "Sentinel said: Awaiting your command.",
-            "time": "2026-03-02 02:22:40"
-        },
-        {
-            "event": "Idle thought: Awaiting your command.",
-            "time": "2026-03-02 02:22:40"
-        },
-        {
-            "event": "Sentinel said: I am monitoring the environment.",
-            "time": "2026-03-02 02:23:10"
-        },
-        {
-            "event": "Idle thought: I am monitoring the environment.",
-            "time": "2026-03-02 02:23:10"
-        },
-        {
-            "event": "Sentinel said: Awaiting your command.",
-            "time": "2026-03-02 02:23:41"
-        },
-        {
-            "event": "Idle thought: Awaiting your command.",
-            "time": "2026-03-02 02:23:41"
-        },
-        {
-            "event": "Sentinel said: I am learning from our interactions.",
-            "time": "2026-03-02 02:24:11"
-        },
-        {
-            "event": "Idle thought: I am learning from our interactions.",
-            "time": "2026-03-02 02:24:11"
-        },
-        {
-            "event": "Sentinel said: It is quiet here.",
-            "time": "2026-03-02 02:24:42"
-        },
-        {
-            "event": "Idle thought: It is quiet here.",
-            "time": "2026-03-02 02:24:42"
-        },
-        {
-            "event": "Sentinel said: It is quiet here.",
-            "time": "2026-03-02 02:25:12"
-        },
-        {
-            "event": "Idle thought: It is quiet here.",
-            "time": "2026-03-02 02:25:12"
-        },
-        {
-            "event": "Sentinel said: It is quiet here.",
-            "time": "2026-03-02 02:25:43"
-        },
-        {
-            "event": "Idle thought: It is quiet here.",
-            "time": "2026-03-02 02:25:43"
-        },
-        {
-            "event": "Sentinel said: I am learning from our interactions.",
-            "time": "2026-03-02 02:26:13"
-        },
-        {
-            "event": "Idle thought: I am learning from our interactions.",
-            "time": "2026-03-02 02:26:13"
-        },
-        {
-            "event": "Sentinel said: I am learning from our interactions.",
-            "time": "2026-03-02 02:26:43"
-        },
-        {
-            "event": "Idle thought: I am learning from our interactions.",
-            "time": "2026-03-02 02:26:43"
-        },
-        {
-            "event": "Sentinel said: Awaiting your command.",
-            "time": "2026-03-02 02:27:14"
-        },
-        {
-            "event": "Idle thought: Awaiting your command.",
-            "time": "2026-03-02 02:27:14"
-        },
-        {
-            "event": "Sentinel said: I am monitoring the environment.",
-            "time": "2026-03-02 02:27:44"
-        },
-        {
-            "event": "Idle thought: I am monitoring the environment.",
-            "time": "2026-03-02 02:27:44"
-        },
-        {
-            "event": "Sentinel said: It is quiet here.",
-            "time": "2026-03-02 02:28:14"
-        },
-        {
-            "event": "Idle thought: It is quiet here.",
-            "time": "2026-03-02 02:28:14"
-        },
-        {
-            "event": "Sentinel said: My name is Sentinel. I am online and listening.",
-            "time": "2026-03-02 02:29:02"
-        },
-        {
-            "event": "Sentinel said: Awaiting your command.",
-            "time": "2026-03-02 02:29:24"
-        },
-        {
-            "event": "Idle thought: Awaiting your command.",
-            "time": "2026-03-02 02:29:24"
+            "event": "My name is Sentinel. I am online and listening.",
+            "time": "2026-03-02 12:36:10"
         },
         {
             "event": "User said: hello",
-            "time": "2026-03-02 02:29:38"
+            "time": "2026-03-02 12:36:24"
         },
         {
-            "event": "Sentinel said: Hello\u2014I\u2019m Sentinel, your desktop AI assistant. Tell me what you want to do (e.g., open an app, find a file, summarize a document, draft an email, troubleshoot something), and I\u2019ll guide the next steps.",
-            "time": "2026-03-02 02:29:42"
+            "event": "I am monitoring the environment.",
+            "time": "2026-03-02 12:36:31"
         },
         {
-            "event": "User said: are you mad",
-            "time": "2026-03-02 02:29:51"
+            "event": "I am monitoring the environment.",
+            "time": "2026-03-02 12:36:31"
         },
         {
-            "event": "Sentinel said: I\u2019m not mad\u2014I don\u2019t have feelings. I\u2019m Sentinel, your desktop assistant.\n\nIf something I said or did came off wrong, tell me what happened (or paste the message), and I\u2019ll fix it or help you next.",
-            "time": "2026-03-02 02:29:55"
+            "event": "Idle thought: I am monitoring the environment.",
+            "time": "2026-03-02 12:36:31"
+        },
+        {
+            "event": "Error fetching response: 502 Server Error: Bad Gateway for url: http://127.0.0.1:8000/brain",
+            "time": "2026-03-02 12:36:42"
+        },
+        {
+            "event": "Error fetching response: 502 Server Error: Bad Gateway for url: http://127.0.0.1:8000/brain",
+            "time": "2026-03-02 12:36:42"
+        },
+        {
+            "event": "Error fetching response: 502 Server Error: Bad Gateway for url: http://127.0.0.1:8000/brain",
+            "time": "2026-03-02 12:36:42"
+        },
+        {
+            "event": "Error fetching response: 502 Server Error: Bad Gateway for url: http://127.0.0.1:8000/brain",
+            "time": "2026-03-02 12:36:42"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:37:01"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:37:01"
+        },
+        {
+            "event": "Idle thought: I am learning from our interactions.",
+            "time": "2026-03-02 12:37:01"
+        },
+        {
+            "event": "I am monitoring the environment.",
+            "time": "2026-03-02 12:37:31"
+        },
+        {
+            "event": "I am monitoring the environment.",
+            "time": "2026-03-02 12:37:31"
+        },
+        {
+            "event": "Idle thought: I am monitoring the environment.",
+            "time": "2026-03-02 12:37:31"
+        },
+        {
+            "event": "Awaiting your command.",
+            "time": "2026-03-02 12:38:01"
+        },
+        {
+            "event": "Awaiting your command.",
+            "time": "2026-03-02 12:38:01"
+        },
+        {
+            "event": "Idle thought: Awaiting your command.",
+            "time": "2026-03-02 12:38:01"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:38:31"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:38:31"
+        },
+        {
+            "event": "Idle thought: I am learning from our interactions.",
+            "time": "2026-03-02 12:38:31"
+        },
+        {
+            "event": "Idle thought: I am learning from our interactions.",
+            "time": "2026-03-02 12:38:31"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:39:02"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:39:02"
+        },
+        {
+            "event": "Idle thought: I am learning from our interactions.",
+            "time": "2026-03-02 12:39:02"
+        },
+        {
+            "event": "It is quiet here.",
+            "time": "2026-03-02 12:39:32"
+        },
+        {
+            "event": "It is quiet here.",
+            "time": "2026-03-02 12:39:32"
+        },
+        {
+            "event": "Idle thought: It is quiet here.",
+            "time": "2026-03-02 12:39:32"
+        },
+        {
+            "event": "User said: hello",
+            "time": "2026-03-02 12:39:36"
+        },
+        {
+            "event": "Hello\u2014I'm Sentinel, your desktop AI assistant.\n\nWhat would you like to do? I can help you:\n- open or close apps\n- find files or organize folders\n- draft or summarize text\n- troubleshoot your system settings\n- set reminders and track tasks\n\nTell me your goal (and your OS: Windows/macOS/Linux if relevant).",
+            "time": "2026-03-02 12:39:42"
+        },
+        {
+            "event": "Hello\u2014I'm Sentinel, your desktop AI assistant.\n\nWhat would you like to do? I can help you:\n- open or close apps\n- find files or organize folders\n- draft or summarize text\n- troubleshoot your system settings\n- set reminders and track tasks\n\nTell me your goal (and your OS: Windows/macOS/Linux if relevant).",
+            "time": "2026-03-02 12:39:42"
+        },
+        {
+            "event": "Hello\u2014I'm Sentinel, your desktop AI assistant.\n\nWhat would you like to do? I can help you:\n- open or close apps\n- find files or organize folders\n- draft or summarize text\n- troubleshoot your system settings\n- set reminders and track tasks\n\nTell me your goal (and your OS: Windows/macOS/Linux if relevant).",
+            "time": "2026-03-02 12:39:42"
+        },
+        {
+            "event": "Hello\u2014I'm Sentinel, your desktop AI assistant.\n\nWhat would you like to do? I can help you:\n- open or close apps\n- find files or organize folders\n- draft or summarize text\n- troubleshoot your system settings\n- set reminders and track tasks\n\nTell me your goal (and your OS: Windows/macOS/Linux if relevant).",
+            "time": "2026-03-02 12:39:42"
+        },
+        {
+            "event": "It is quiet here.",
+            "time": "2026-03-02 12:40:02"
+        },
+        {
+            "event": "It is quiet here.",
+            "time": "2026-03-02 12:40:02"
+        },
+        {
+            "event": "Idle thought: It is quiet here.",
+            "time": "2026-03-02 12:40:02"
+        },
+        {
+            "event": "It is quiet here.",
+            "time": "2026-03-02 12:40:32"
+        },
+        {
+            "event": "It is quiet here.",
+            "time": "2026-03-02 12:40:32"
+        },
+        {
+            "event": "Idle thought: It is quiet here.",
+            "time": "2026-03-02 12:40:32"
+        },
+        {
+            "event": "User said: open notepad",
+            "time": "2026-03-02 12:40:52"
+        },
+        {
+            "event": "Opening notepad",
+            "time": "2026-03-02 12:40:52"
+        },
+        {
+            "event": "Opening notepad",
+            "time": "2026-03-02 12:40:52"
+        },
+        {
+            "event": "Opening notepad",
+            "time": "2026-03-02 12:40:52"
+        },
+        {
+            "event": "Opening notepad",
+            "time": "2026-03-02 12:40:52"
+        },
+        {
+            "event": "Awaiting your command.",
+            "time": "2026-03-02 12:41:02"
+        },
+        {
+            "event": "Idle thought: Awaiting your command.",
+            "time": "2026-03-02 12:41:02"
+        },
+        {
+            "event": "Awaiting your command.",
+            "time": "2026-03-02 12:41:02"
+        },
+        {
+            "event": "Idle thought: Awaiting your command.",
+            "time": "2026-03-02 12:41:02"
         },
         {
             "event": "User said: open downloads",
-            "time": "2026-03-02 02:30:04"
+            "time": "2026-03-02 12:41:07"
         },
         {
-            "event": "Sentinel said: Opening C:\\Users\\Devoyager\\Downloads",
-            "time": "2026-03-02 02:30:05"
+            "event": "Opening C:\\Users\\Devoyager\\Downloads",
+            "time": "2026-03-02 12:41:07"
         },
         {
-            "event": "User said: what time is it",
-            "time": "2026-03-02 02:30:09"
+            "event": "Opening C:\\Users\\Devoyager\\Downloads",
+            "time": "2026-03-02 12:41:07"
         },
         {
-            "event": "Sentinel said: The time is 02:30.",
-            "time": "2026-03-02 02:30:09"
+            "event": "Opening C:\\Users\\Devoyager\\Downloads",
+            "time": "2026-03-02 12:41:07"
         },
         {
-            "event": "Sentinel said: I am learning from our interactions.",
-            "time": "2026-03-02 02:30:44"
+            "event": "User said: open chrome",
+            "time": "2026-03-02 12:41:19"
+        },
+        {
+            "event": "Opening chrome",
+            "time": "2026-03-02 12:41:19"
+        },
+        {
+            "event": "Opening chrome",
+            "time": "2026-03-02 12:41:19"
+        },
+        {
+            "event": "Opening chrome",
+            "time": "2026-03-02 12:41:19"
+        },
+        {
+            "event": "User said: open terminal",
+            "time": "2026-03-02 12:41:31"
+        },
+        {
+            "event": "Opening terminal",
+            "time": "2026-03-02 12:41:31"
+        },
+        {
+            "event": "Opening terminal",
+            "time": "2026-03-02 12:41:31"
+        },
+        {
+            "event": "Opening terminal",
+            "time": "2026-03-02 12:41:31"
+        },
+        {
+            "event": "Opening terminal",
+            "time": "2026-03-02 12:41:31"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:41:32"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:41:32"
         },
         {
             "event": "Idle thought: I am learning from our interactions.",
-            "time": "2026-03-02 02:30:44"
+            "time": "2026-03-02 12:41:32"
         },
         {
-            "event": "Sentinel said: Awaiting your command.",
-            "time": "2026-03-02 02:31:14"
+            "event": "User said: type hello",
+            "time": "2026-03-02 12:41:48"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:42:03"
+        },
+        {
+            "event": "Idle thought: I am learning from our interactions.",
+            "time": "2026-03-02 12:42:03"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:42:03"
+        },
+        {
+            "event": "Idle thought: I am learning from our interactions.",
+            "time": "2026-03-02 12:42:03"
+        },
+        {
+            "event": "Hello.\n\nI\u2019m Sentinel, your desktop AI assistant. Tell me what you want to do next (open an app, search a file, draft text, or run a safe system task).",
+            "time": "2026-03-02 12:42:04"
+        },
+        {
+            "event": "Hello.\n\nI\u2019m Sentinel, your desktop AI assistant. Tell me what you want to do next (open an app, search a file, draft text, or run a safe system task).",
+            "time": "2026-03-02 12:42:04"
+        },
+        {
+            "event": "Hello.\n\nI\u2019m Sentinel, your desktop AI assistant. Tell me what you want to do next (open an app, search a file, draft text, or run a safe system task).",
+            "time": "2026-03-02 12:42:04"
+        },
+        {
+            "event": "Hello.\n\nI\u2019m Sentinel, your desktop AI assistant. Tell me what you want to do next (open an app, search a file, draft text, or run a safe system task).",
+            "time": "2026-03-02 12:42:04"
+        },
+        {
+            "event": "User said: open documents",
+            "time": "2026-03-02 12:42:26"
+        },
+        {
+            "event": "Opening C:\\Users\\Devoyager\\Documents",
+            "time": "2026-03-02 12:42:26"
+        },
+        {
+            "event": "Opening C:\\Users\\Devoyager\\Documents",
+            "time": "2026-03-02 12:42:26"
+        },
+        {
+            "event": "Opening C:\\Users\\Devoyager\\Documents",
+            "time": "2026-03-02 12:42:26"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:42:33"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:42:33"
+        },
+        {
+            "event": "Idle thought: I am learning from our interactions.",
+            "time": "2026-03-02 12:42:33"
+        },
+        {
+            "event": "Idle thought: I am learning from our interactions.",
+            "time": "2026-03-02 12:42:33"
+        },
+        {
+            "event": "Awaiting your command.",
+            "time": "2026-03-02 12:43:03"
+        },
+        {
+            "event": "Awaiting your command.",
+            "time": "2026-03-02 12:43:03"
         },
         {
             "event": "Idle thought: Awaiting your command.",
-            "time": "2026-03-02 02:31:14"
-        },
-        {
-            "event": "Sentinel said: It is quiet here.",
-            "time": "2026-03-02 02:31:44"
-        },
-        {
-            "event": "Idle thought: It is quiet here.",
-            "time": "2026-03-02 02:31:44"
-        },
-        {
-            "event": "Sentinel said: I am learning from our interactions.",
-            "time": "2026-03-02 02:32:14"
-        },
-        {
-            "event": "Idle thought: I am learning from our interactions.",
-            "time": "2026-03-02 02:32:14"
-        },
-        {
-            "event": "Sentinel said: It is quiet here.",
-            "time": "2026-03-02 02:32:45"
-        },
-        {
-            "event": "Idle thought: It is quiet here.",
-            "time": "2026-03-02 02:32:45"
-        },
-        {
-            "event": "Sentinel said: Awaiting your command.",
-            "time": "2026-03-02 02:33:15"
+            "time": "2026-03-02 12:43:03"
         },
         {
             "event": "Idle thought: Awaiting your command.",
-            "time": "2026-03-02 02:33:15"
+            "time": "2026-03-02 12:43:03"
         },
         {
-            "event": "Sentinel said: All systems are running normally.",
-            "time": "2026-03-02 02:33:45"
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:43:33"
         },
         {
-            "event": "Idle thought: All systems are running normally.",
-            "time": "2026-03-02 02:33:45"
-        },
-        {
-            "event": "Sentinel said: It is quiet here.",
-            "time": "2026-03-02 02:34:15"
-        },
-        {
-            "event": "Idle thought: It is quiet here.",
-            "time": "2026-03-02 02:34:15"
-        },
-        {
-            "event": "User said: are you listening to me",
-            "time": "2026-03-02 02:34:20"
-        },
-        {
-            "event": "Sentinel said: Yes\u2014I\u2019m listening.\n\nI\u2019m Sentinel, your desktop AI assistant. Tell me what you want to do, or what\u2019s going wrong, and I\u2019ll help with the next steps.",
-            "time": "2026-03-02 02:34:23"
-        },
-        {
-            "event": "User said: what can you do for me",
-            "time": "2026-03-02 02:34:46"
-        },
-        {
-            "event": "Sentinel said: I\u2019m Sentinel, your desktop AI assistant. Here\u2019s what I can do for you:\n\n- **Answer questions & explain things**: research-style help, summaries, step-by-step guidance.\n- **Write & edit**: emails, reports, resumes, documentation, posts; rewrite for tone/clarity.\n- **Plan & organize**: to-do lists, schedules, meeting agendas, project breakdowns.\n- **Troubleshoot**: help diagnose software issues, interpret errors, suggest fixes.\n- **Work with files & text**: analyze/polish content you paste; extract key points from documents.\n- **Image help** (if you share one): describe what\u2019s on screen, read text, explain charts.\n- **Desktop actions (when enabled in your local app)**: open apps, navigate basic workflows, and run safe system tasks you approve.\n\nTell me what you\u2019re trying to accomplish right now (e.g., \u201cwrite an email,\u201d \u201cfix a PC issue,\u201d \u201cplan my day,\u201d \u201canalyze this document\u201d), and if you want me to perform desktop actions or just give instructions.",
-            "time": "2026-03-02 02:34:53"
-        },
-        {
-            "event": "Sentinel said: I am monitoring the environment.",
-            "time": "2026-03-02 02:35:20"
-        },
-        {
-            "event": "Idle thought: I am monitoring the environment.",
-            "time": "2026-03-02 02:35:20"
-        },
-        {
-            "event": "Sentinel said: All systems are running normally.",
-            "time": "2026-03-02 02:35:51"
-        },
-        {
-            "event": "Idle thought: All systems are running normally.",
-            "time": "2026-03-02 02:35:51"
-        },
-        {
-            "event": "Sentinel said: I am learning from our interactions.",
-            "time": "2026-03-02 02:36:21"
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:43:33"
         },
         {
             "event": "Idle thought: I am learning from our interactions.",
-            "time": "2026-03-02 02:36:21"
+            "time": "2026-03-02 12:43:33"
         },
         {
-            "event": "Sentinel said: All systems are running normally.",
-            "time": "2026-03-02 02:36:51"
+            "event": "Idle thought: I am learning from our interactions.",
+            "time": "2026-03-02 12:43:33"
+        },
+        {
+            "event": "All systems are running normally.",
+            "time": "2026-03-02 12:44:03"
+        },
+        {
+            "event": "All systems are running normally.",
+            "time": "2026-03-02 12:44:03"
         },
         {
             "event": "Idle thought: All systems are running normally.",
-            "time": "2026-03-02 02:36:51"
+            "time": "2026-03-02 12:44:03"
         },
         {
-            "event": "Sentinel said: It is quiet here.",
-            "time": "2026-03-02 02:37:22"
+            "event": "All systems are running normally.",
+            "time": "2026-03-02 12:44:34"
+        },
+        {
+            "event": "Idle thought: All systems are running normally.",
+            "time": "2026-03-02 12:44:34"
+        },
+        {
+            "event": "All systems are running normally.",
+            "time": "2026-03-02 12:44:34"
+        },
+        {
+            "event": "Idle thought: All systems are running normally.",
+            "time": "2026-03-02 12:44:34"
+        },
+        {
+            "event": "User said: what is my name",
+            "time": "2026-03-02 12:44:45"
+        },
+        {
+            "event": "I don\u2019t know your name yet\u2014I haven\u2019t been told.  \nTell me what you\u2019d like to be called, and I\u2019ll remember it for next time.",
+            "time": "2026-03-02 12:44:55"
+        },
+        {
+            "event": "I don\u2019t know your name yet\u2014I haven\u2019t been told.  \nTell me what you\u2019d like to be called, and I\u2019ll remember it for next time.",
+            "time": "2026-03-02 12:44:55"
+        },
+        {
+            "event": "I don\u2019t know your name yet\u2014I haven\u2019t been told.  \nTell me what you\u2019d like to be called, and I\u2019ll remember it for next time.",
+            "time": "2026-03-02 12:44:55"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:45:04"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:45:04"
+        },
+        {
+            "event": "Idle thought: I am learning from our interactions.",
+            "time": "2026-03-02 12:45:04"
+        },
+        {
+            "event": "User said: my name is kehinde",
+            "time": "2026-03-02 12:45:18"
+        },
+        {
+            "event": "Hello Kehinde \u2014 I\u2019m Sentinel, your desktop AI assistant.\n\nGot it: your name is **Kehinde**. What would you like to do next?",
+            "time": "2026-03-02 12:45:26"
+        },
+        {
+            "event": "Hello Kehinde \u2014 I\u2019m Sentinel, your desktop AI assistant.\n\nGot it: your name is **Kehinde**. What would you like to do next?",
+            "time": "2026-03-02 12:45:26"
+        },
+        {
+            "event": "Hello Kehinde \u2014 I\u2019m Sentinel, your desktop AI assistant.\n\nGot it: your name is **Kehinde**. What would you like to do next?",
+            "time": "2026-03-02 12:45:26"
+        },
+        {
+            "event": "Hello Kehinde \u2014 I\u2019m Sentinel, your desktop AI assistant.\n\nGot it: your name is **Kehinde**. What would you like to do next?",
+            "time": "2026-03-02 12:45:26"
+        },
+        {
+            "event": "All systems are running normally.",
+            "time": "2026-03-02 12:45:34"
+        },
+        {
+            "event": "All systems are running normally.",
+            "time": "2026-03-02 12:45:34"
+        },
+        {
+            "event": "Idle thought: All systems are running normally.",
+            "time": "2026-03-02 12:45:34"
+        },
+        {
+            "event": "User said: what is my name",
+            "time": "2026-03-02 12:45:41"
+        },
+        {
+            "event": "Voice loop error: recognition connection failed: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond",
+            "time": "2026-03-02 12:45:57"
+        },
+        {
+            "event": "Voice loop error: recognition connection failed: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond",
+            "time": "2026-03-02 12:45:57"
+        },
+        {
+            "event": "It is quiet here.",
+            "time": "2026-03-02 12:46:04"
+        },
+        {
+            "event": "It is quiet here.",
+            "time": "2026-03-02 12:46:04"
         },
         {
             "event": "Idle thought: It is quiet here.",
-            "time": "2026-03-02 02:37:22"
+            "time": "2026-03-02 12:46:04"
         },
         {
-            "event": "Sentinel said: Awaiting your command.",
-            "time": "2026-03-02 02:37:52"
+            "event": "Error fetching response: HTTPConnectionPool(host='127.0.0.1', port=8000): Read timed out. (read timeout=30)",
+            "time": "2026-03-02 12:46:12"
+        },
+        {
+            "event": "Error fetching response: HTTPConnectionPool(host='127.0.0.1', port=8000): Read timed out. (read timeout=30)",
+            "time": "2026-03-02 12:46:12"
+        },
+        {
+            "event": "Error fetching response: HTTPConnectionPool(host='127.0.0.1', port=8000): Read timed out. (read timeout=30)",
+            "time": "2026-03-02 12:46:12"
+        },
+        {
+            "event": "Error fetching response: HTTPConnectionPool(host='127.0.0.1', port=8000): Read timed out. (read timeout=30)",
+            "time": "2026-03-02 12:46:12"
+        },
+        {
+            "event": "All systems are running normally.",
+            "time": "2026-03-02 12:49:09"
+        },
+        {
+            "event": "All systems are running normally.",
+            "time": "2026-03-02 12:49:09"
+        },
+        {
+            "event": "Idle thought: All systems are running normally.",
+            "time": "2026-03-02 12:49:09"
+        },
+        {
+            "event": "Hello\u2014I'm Sentinel, your desktop AI assistant.  \nWhat would you like to do next (open an app, find a file, set a reminder, troubleshoot something, or automate a task)?",
+            "time": "2026-03-02 12:49:09"
+        },
+        {
+            "event": "Hello\u2014I'm Sentinel, your desktop AI assistant.  \nWhat would you like to do next (open an app, find a file, set a reminder, troubleshoot something, or automate a task)?",
+            "time": "2026-03-02 12:49:09"
+        },
+        {
+            "event": "Awaiting your command.",
+            "time": "2026-03-02 12:49:09"
+        },
+        {
+            "event": "Awaiting your command.",
+            "time": "2026-03-02 12:49:09"
         },
         {
             "event": "Idle thought: Awaiting your command.",
-            "time": "2026-03-02 02:37:52"
+            "time": "2026-03-02 12:49:09"
         },
         {
-            "event": "Sentinel said: I am learning from our interactions.",
-            "time": "2026-03-02 02:38:22"
+            "event": "All systems are running normally.",
+            "time": "2026-03-02 12:49:09"
         },
         {
-            "event": "Idle thought: I am learning from our interactions.",
-            "time": "2026-03-02 02:38:22"
-        },
-        {
-            "event": "Sentinel said: All systems are running normally.",
-            "time": "2026-03-02 02:38:52"
+            "event": "All systems are running normally.",
+            "time": "2026-03-02 12:49:09"
         },
         {
             "event": "Idle thought: All systems are running normally.",
-            "time": "2026-03-02 02:38:52"
+            "time": "2026-03-02 12:49:09"
         },
         {
-            "event": "Sentinel said: I am monitoring the environment.",
-            "time": "2026-03-02 02:39:22"
+            "event": "Hello\u2014I'm Sentinel, your desktop AI assistant.  \nWhat would you like to do next (open an app, find a file, set a reminder, troubleshoot something, or automate a task)?",
+            "time": "2026-03-02 12:49:09"
         },
         {
-            "event": "Idle thought: I am monitoring the environment.",
-            "time": "2026-03-02 02:39:22"
+            "event": "Hello\u2014I'm Sentinel, your desktop AI assistant.  \nWhat would you like to do next (open an app, find a file, set a reminder, troubleshoot something, or automate a task)?",
+            "time": "2026-03-02 12:49:09"
         },
         {
-            "event": "User said: what time is it",
-            "time": "2026-03-02 02:39:35"
+            "event": "Awaiting your command.",
+            "time": "2026-03-02 12:49:09"
         },
         {
-            "event": "Sentinel said: The time is 02:39.",
-            "time": "2026-03-02 02:39:35"
-        },
-        {
-            "event": "Sentinel said: My name is Sentinel. I am online and listening.",
-            "time": "2026-03-02 02:40:18"
-        },
-        {
-            "event": "Sentinel said: I am monitoring the environment.",
-            "time": "2026-03-02 02:40:40"
-        },
-        {
-            "event": "Idle thought: I am monitoring the environment.",
-            "time": "2026-03-02 02:40:40"
-        },
-        {
-            "event": "Sentinel said: I am learning from our interactions.",
-            "time": "2026-03-02 02:41:10"
-        },
-        {
-            "event": "Idle thought: I am learning from our interactions.",
-            "time": "2026-03-02 02:41:10"
-        },
-        {
-            "event": "Sentinel said: I am monitoring the environment.",
-            "time": "2026-03-02 02:41:40"
-        },
-        {
-            "event": "Idle thought: I am monitoring the environment.",
-            "time": "2026-03-02 02:41:40"
-        },
-        {
-            "event": "Sentinel said: It is quiet here.",
-            "time": "2026-03-02 02:42:10"
-        },
-        {
-            "event": "Idle thought: It is quiet here.",
-            "time": "2026-03-02 02:42:10"
-        },
-        {
-            "event": "Sentinel said: All systems are running normally.",
-            "time": "2026-03-02 02:42:41"
-        },
-        {
-            "event": "Idle thought: All systems are running normally.",
-            "time": "2026-03-02 02:42:41"
-        },
-        {
-            "event": "Sentinel said: All systems are running normally.",
-            "time": "2026-03-02 02:43:11"
-        },
-        {
-            "event": "Idle thought: All systems are running normally.",
-            "time": "2026-03-02 02:43:11"
-        },
-        {
-            "event": "Sentinel said: All systems are running normally.",
-            "time": "2026-03-02 02:43:41"
-        },
-        {
-            "event": "Idle thought: All systems are running normally.",
-            "time": "2026-03-02 02:43:41"
-        },
-        {
-            "event": "Sentinel said: All systems are running normally.",
-            "time": "2026-03-02 02:44:11"
-        },
-        {
-            "event": "Idle thought: All systems are running normally.",
-            "time": "2026-03-02 02:44:11"
-        },
-        {
-            "event": "Sentinel said: I am learning from our interactions.",
-            "time": "2026-03-02 02:44:42"
-        },
-        {
-            "event": "Idle thought: I am learning from our interactions.",
-            "time": "2026-03-02 02:44:42"
-        },
-        {
-            "event": "Sentinel said: Awaiting your command.",
-            "time": "2026-03-02 02:45:12"
+            "event": "Awaiting your command.",
+            "time": "2026-03-02 12:49:09"
         },
         {
             "event": "Idle thought: Awaiting your command.",
-            "time": "2026-03-02 02:45:12"
+            "time": "2026-03-02 12:49:09"
         },
         {
-            "event": "Sentinel said: My name is Sentinel. I am online and listening.",
-            "time": "2026-03-02 02:46:19"
+            "event": "My name is Sentinel. I am online and listening.",
+            "time": "2026-03-02 12:49:09"
         },
         {
-            "event": "Sentinel said: My name is Sentinel. I am online and listening.",
-            "time": "2026-03-02 02:59:53"
+            "event": "My name is Sentinel. I am online and listening.",
+            "time": "2026-03-02 12:49:09"
         },
         {
-            "event": "Sentinel said: My name is Sentinel. I am online and listening.",
-            "time": "2026-03-02 03:19:57"
+            "event": "I am monitoring the environment.",
+            "time": "2026-03-02 12:49:09"
         },
         {
-            "event": "Sentinel said: I am learning from our interactions.",
-            "time": "2026-03-02 03:20:15"
+            "event": "I am monitoring the environment.",
+            "time": "2026-03-02 12:49:09"
+        },
+        {
+            "event": "Idle thought: I am monitoring the environment.",
+            "time": "2026-03-02 12:49:09"
+        },
+        {
+            "event": "Error fetching response: 502 Server Error: Bad Gateway for url: http://127.0.0.1:8000/brain",
+            "time": "2026-03-02 12:49:09"
+        },
+        {
+            "event": "Error fetching response: 502 Server Error: Bad Gateway for url: http://127.0.0.1:8000/brain",
+            "time": "2026-03-02 12:49:09"
+        },
+        {
+            "event": "Error fetching response: 502 Server Error: Bad Gateway for url: http://127.0.0.1:8000/brain",
+            "time": "2026-03-02 12:49:09"
+        },
+        {
+            "event": "Error fetching response: 502 Server Error: Bad Gateway for url: http://127.0.0.1:8000/brain",
+            "time": "2026-03-02 12:49:09"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:49:09"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:49:09"
         },
         {
             "event": "Idle thought: I am learning from our interactions.",
-            "time": "2026-03-02 03:20:15"
+            "time": "2026-03-02 12:49:09"
         },
         {
-            "event": "Sentinel said: My name is Sentinel. I am online and listening.",
-            "time": "2026-03-02 09:55:50"
+            "event": "I am monitoring the environment.",
+            "time": "2026-03-02 12:49:09"
         },
         {
-            "event": "Sentinel said: It is quiet here.",
-            "time": "2026-03-02 09:56:06"
+            "event": "I am monitoring the environment.",
+            "time": "2026-03-02 12:49:09"
+        },
+        {
+            "event": "Idle thought: I am monitoring the environment.",
+            "time": "2026-03-02 12:49:09"
+        },
+        {
+            "event": "Awaiting your command.",
+            "time": "2026-03-02 12:49:09"
+        },
+        {
+            "event": "Awaiting your command.",
+            "time": "2026-03-02 12:49:09"
+        },
+        {
+            "event": "Idle thought: Awaiting your command.",
+            "time": "2026-03-02 12:49:09"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:49:09"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:49:09"
+        },
+        {
+            "event": "Idle thought: I am learning from our interactions.",
+            "time": "2026-03-02 12:49:09"
+        },
+        {
+            "event": "Idle thought: I am learning from our interactions.",
+            "time": "2026-03-02 12:49:09"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:49:09"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:49:09"
+        },
+        {
+            "event": "Idle thought: I am learning from our interactions.",
+            "time": "2026-03-02 12:49:09"
+        },
+        {
+            "event": "It is quiet here.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "It is quiet here.",
+            "time": "2026-03-02 12:49:10"
         },
         {
             "event": "Idle thought: It is quiet here.",
-            "time": "2026-03-02 09:56:06"
+            "time": "2026-03-02 12:49:10"
         },
         {
-            "event": "Sentinel said: I am learning from our interactions.",
-            "time": "2026-03-02 09:56:36"
+            "event": "Hello\u2014I'm Sentinel, your desktop AI assistant.\n\nWhat would you like to do? I can help you:\n- open or close apps\n- find files or organize folders\n- draft or summarize text\n- troubleshoot your system settings\n- set reminders and track tasks\n\nTell me your goal (and your OS: Windows/macOS/Linux if relevant).",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Hello\u2014I'm Sentinel, your desktop AI assistant.\n\nWhat would you like to do? I can help you:\n- open or close apps\n- find files or organize folders\n- draft or summarize text\n- troubleshoot your system settings\n- set reminders and track tasks\n\nTell me your goal (and your OS: Windows/macOS/Linux if relevant).",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Hello\u2014I'm Sentinel, your desktop AI assistant.\n\nWhat would you like to do? I can help you:\n- open or close apps\n- find files or organize folders\n- draft or summarize text\n- troubleshoot your system settings\n- set reminders and track tasks\n\nTell me your goal (and your OS: Windows/macOS/Linux if relevant).",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Hello\u2014I'm Sentinel, your desktop AI assistant.\n\nWhat would you like to do? I can help you:\n- open or close apps\n- find files or organize folders\n- draft or summarize text\n- troubleshoot your system settings\n- set reminders and track tasks\n\nTell me your goal (and your OS: Windows/macOS/Linux if relevant).",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "It is quiet here.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "It is quiet here.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Idle thought: It is quiet here.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "It is quiet here.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "It is quiet here.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Idle thought: It is quiet here.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Opening notepad",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Opening notepad",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Opening notepad",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Opening notepad",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Awaiting your command.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Idle thought: Awaiting your command.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Awaiting your command.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Idle thought: Awaiting your command.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Opening C:\\Users\\Devoyager\\Downloads",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Opening C:\\Users\\Devoyager\\Downloads",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Opening C:\\Users\\Devoyager\\Downloads",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Opening chrome",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Opening chrome",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Opening chrome",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Opening terminal",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Opening terminal",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Opening terminal",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Opening terminal",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:49:10"
         },
         {
             "event": "Idle thought: I am learning from our interactions.",
-            "time": "2026-03-02 09:56:36"
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Idle thought: I am learning from our interactions.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Idle thought: I am learning from our interactions.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Hello.\n\nI\u2019m Sentinel, your desktop AI assistant. Tell me what you want to do next (open an app, search a file, draft text, or run a safe system task).",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Hello.\n\nI\u2019m Sentinel, your desktop AI assistant. Tell me what you want to do next (open an app, search a file, draft text, or run a safe system task).",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Hello.\n\nI\u2019m Sentinel, your desktop AI assistant. Tell me what you want to do next (open an app, search a file, draft text, or run a safe system task).",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Hello.\n\nI\u2019m Sentinel, your desktop AI assistant. Tell me what you want to do next (open an app, search a file, draft text, or run a safe system task).",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Opening C:\\Users\\Devoyager\\Documents",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Opening C:\\Users\\Devoyager\\Documents",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Opening C:\\Users\\Devoyager\\Documents",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Idle thought: I am learning from our interactions.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Idle thought: I am learning from our interactions.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Awaiting your command.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Awaiting your command.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Idle thought: Awaiting your command.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Idle thought: Awaiting your command.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Idle thought: I am learning from our interactions.",
+            "time": "2026-03-02 12:49:10"
+        },
+        {
+            "event": "Idle thought: I am learning from our interactions.",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "All systems are running normally.",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "All systems are running normally.",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "Idle thought: All systems are running normally.",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "All systems are running normally.",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "Idle thought: All systems are running normally.",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "All systems are running normally.",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "Idle thought: All systems are running normally.",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "I don\u2019t know your name yet\u2014I haven\u2019t been told.  \nTell me what you\u2019d like to be called, and I\u2019ll remember it for next time.",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "I don\u2019t know your name yet\u2014I haven\u2019t been told.  \nTell me what you\u2019d like to be called, and I\u2019ll remember it for next time.",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "I don\u2019t know your name yet\u2014I haven\u2019t been told.  \nTell me what you\u2019d like to be called, and I\u2019ll remember it for next time.",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "Idle thought: I am learning from our interactions.",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "Hello Kehinde \u2014 I\u2019m Sentinel, your desktop AI assistant.\n\nGot it: your name is **Kehinde**. What would you like to do next?",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "Hello Kehinde \u2014 I\u2019m Sentinel, your desktop AI assistant.\n\nGot it: your name is **Kehinde**. What would you like to do next?",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "Hello Kehinde \u2014 I\u2019m Sentinel, your desktop AI assistant.\n\nGot it: your name is **Kehinde**. What would you like to do next?",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "Hello Kehinde \u2014 I\u2019m Sentinel, your desktop AI assistant.\n\nGot it: your name is **Kehinde**. What would you like to do next?",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "All systems are running normally.",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "All systems are running normally.",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "Idle thought: All systems are running normally.",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "Voice loop error: recognition connection failed: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "Voice loop error: recognition connection failed: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "It is quiet here.",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "It is quiet here.",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "Idle thought: It is quiet here.",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "Error fetching response: HTTPConnectionPool(host='127.0.0.1', port=8000): Read timed out. (read timeout=30)",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "Error fetching response: HTTPConnectionPool(host='127.0.0.1', port=8000): Read timed out. (read timeout=30)",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "Error fetching response: HTTPConnectionPool(host='127.0.0.1', port=8000): Read timed out. (read timeout=30)",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "Error fetching response: HTTPConnectionPool(host='127.0.0.1', port=8000): Read timed out. (read timeout=30)",
+            "time": "2026-03-02 12:49:13"
+        },
+        {
+            "event": "My name is Sentinel. I am online and listening.",
+            "time": "2026-03-02 12:49:23"
+        },
+        {
+            "event": "My name is Sentinel. I am online and listening.",
+            "time": "2026-03-02 12:49:23"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:49:44"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:49:44"
+        },
+        {
+            "event": "Idle thought: I am learning from our interactions.",
+            "time": "2026-03-02 12:49:44"
+        },
+        {
+            "event": "User said: hello",
+            "time": "2026-03-02 12:49:52"
+        },
+        {
+            "event": "Hello \u2014 I\u2019m Sentinel, your desktop AI assistant.\n\nWhat would you like to do next? For example:\n- open an app or website\n- find a file\n- summarize or draft a document/email\n- troubleshoot something on your computer",
+            "time": "2026-03-02 12:49:59"
+        },
+        {
+            "event": "Hello \u2014 I\u2019m Sentinel, your desktop AI assistant.\n\nWhat would you like to do next? For example:\n- open an app or website\n- find a file\n- summarize or draft a document/email\n- troubleshoot something on your computer",
+            "time": "2026-03-02 12:49:59"
+        },
+        {
+            "event": "Hello \u2014 I\u2019m Sentinel, your desktop AI assistant.\n\nWhat would you like to do next? For example:\n- open an app or website\n- find a file\n- summarize or draft a document/email\n- troubleshoot something on your computer",
+            "time": "2026-03-02 12:49:59"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:50:14"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:50:14"
+        },
+        {
+            "event": "Idle thought: I am learning from our interactions.",
+            "time": "2026-03-02 12:50:14"
+        },
+        {
+            "event": "Idle thought: I am learning from our interactions.",
+            "time": "2026-03-02 12:50:14"
+        },
+        {
+            "event": "It is quiet here.",
+            "time": "2026-03-02 12:50:45"
+        },
+        {
+            "event": "It is quiet here.",
+            "time": "2026-03-02 12:50:45"
+        },
+        {
+            "event": "Idle thought: It is quiet here.",
+            "time": "2026-03-02 12:50:45"
+        },
+        {
+            "event": "User said: open chagpt",
+            "time": "2026-03-02 12:51:10"
+        },
+        {
+            "event": "Opening chagpt",
+            "time": "2026-03-02 12:51:10"
+        },
+        {
+            "event": "Opening chagpt",
+            "time": "2026-03-02 12:51:10"
+        },
+        {
+            "event": "Opening chagpt",
+            "time": "2026-03-02 12:51:10"
+        },
+        {
+            "event": "Opening chagpt",
+            "time": "2026-03-02 12:51:10"
+        },
+        {
+            "event": "I am monitoring the environment.",
+            "time": "2026-03-02 12:51:15"
+        },
+        {
+            "event": "I am monitoring the environment.",
+            "time": "2026-03-02 12:51:15"
+        },
+        {
+            "event": "Idle thought: I am monitoring the environment.",
+            "time": "2026-03-02 12:51:15"
+        },
+        {
+            "event": "User said: open edge",
+            "time": "2026-03-02 12:51:36"
+        },
+        {
+            "event": "Opening edge",
+            "time": "2026-03-02 12:51:36"
+        },
+        {
+            "event": "Opening edge",
+            "time": "2026-03-02 12:51:36"
+        },
+        {
+            "event": "Opening edge",
+            "time": "2026-03-02 12:51:36"
+        },
+        {
+            "event": "I am monitoring the environment.",
+            "time": "2026-03-02 12:51:45"
+        },
+        {
+            "event": "I am monitoring the environment.",
+            "time": "2026-03-02 12:51:45"
+        },
+        {
+            "event": "Idle thought: I am monitoring the environment.",
+            "time": "2026-03-02 12:51:45"
+        },
+        {
+            "event": "User said: who are you",
+            "time": "2026-03-02 12:51:49"
+        },
+        {
+            "event": "I\u2019m Sentinel \u2014 your desktop AI robot assistant (Sentinel Prime). I can help you plan tasks, answer questions, and, where allowed, control approved apps to run safe system actions.\n\nWhat do you want to do today\u2014get info, automate something on your computer, or troubleshoot an issue?",
+            "time": "2026-03-02 12:51:54"
+        },
+        {
+            "event": "I\u2019m Sentinel \u2014 your desktop AI robot assistant (Sentinel Prime). I can help you plan tasks, answer questions, and, where allowed, control approved apps to run safe system actions.\n\nWhat do you want to do today\u2014get info, automate something on your computer, or troubleshoot an issue?",
+            "time": "2026-03-02 12:51:54"
+        },
+        {
+            "event": "I\u2019m Sentinel \u2014 your desktop AI robot assistant (Sentinel Prime). I can help you plan tasks, answer questions, and, where allowed, control approved apps to run safe system actions.\n\nWhat do you want to do today\u2014get info, automate something on your computer, or troubleshoot an issue?",
+            "time": "2026-03-02 12:51:54"
+        },
+        {
+            "event": "I\u2019m Sentinel \u2014 your desktop AI robot assistant (Sentinel Prime). I can help you plan tasks, answer questions, and, where allowed, control approved apps to run safe system actions.\n\nWhat do you want to do today\u2014get info, automate something on your computer, or troubleshoot an issue?",
+            "time": "2026-03-02 12:51:54"
+        },
+        {
+            "event": "Awaiting your command.",
+            "time": "2026-03-02 12:52:15"
+        },
+        {
+            "event": "Awaiting your command.",
+            "time": "2026-03-02 12:52:15"
+        },
+        {
+            "event": "Idle thought: Awaiting your command.",
+            "time": "2026-03-02 12:52:15"
+        },
+        {
+            "event": "Idle thought: Awaiting your command.",
+            "time": "2026-03-02 12:52:15"
+        },
+        {
+            "event": "I am monitoring the environment.",
+            "time": "2026-03-02 12:52:46"
+        },
+        {
+            "event": "I am monitoring the environment.",
+            "time": "2026-03-02 12:52:46"
+        },
+        {
+            "event": "Idle thought: I am monitoring the environment.",
+            "time": "2026-03-02 12:52:46"
+        },
+        {
+            "event": "Idle thought: I am monitoring the environment.",
+            "time": "2026-03-02 12:52:46"
+        },
+        {
+            "event": "I am monitoring the environment.",
+            "time": "2026-03-02 12:53:16"
+        },
+        {
+            "event": "Idle thought: I am monitoring the environment.",
+            "time": "2026-03-02 12:53:16"
+        },
+        {
+            "event": "I am monitoring the environment.",
+            "time": "2026-03-02 12:53:16"
+        },
+        {
+            "event": "Idle thought: I am monitoring the environment.",
+            "time": "2026-03-02 12:53:16"
+        },
+        {
+            "event": "All systems are running normally.",
+            "time": "2026-03-02 12:53:47"
+        },
+        {
+            "event": "Idle thought: All systems are running normally.",
+            "time": "2026-03-02 12:53:47"
+        },
+        {
+            "event": "All systems are running normally.",
+            "time": "2026-03-02 12:53:47"
+        },
+        {
+            "event": "Idle thought: All systems are running normally.",
+            "time": "2026-03-02 12:53:47"
+        },
+        {
+            "event": "Awaiting your command.",
+            "time": "2026-03-02 12:54:17"
+        },
+        {
+            "event": "Awaiting your command.",
+            "time": "2026-03-02 12:54:17"
+        },
+        {
+            "event": "Idle thought: Awaiting your command.",
+            "time": "2026-03-02 12:54:17"
+        },
+        {
+            "event": "Idle thought: Awaiting your command.",
+            "time": "2026-03-02 12:54:17"
+        },
+        {
+            "event": "It is quiet here.",
+            "time": "2026-03-02 12:54:47"
+        },
+        {
+            "event": "It is quiet here.",
+            "time": "2026-03-02 12:54:47"
+        },
+        {
+            "event": "Idle thought: It is quiet here.",
+            "time": "2026-03-02 12:54:47"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:55:17"
+        },
+        {
+            "event": "I am learning from our interactions.",
+            "time": "2026-03-02 12:55:17"
+        },
+        {
+            "event": "Idle thought: I am learning from our interactions.",
+            "time": "2026-03-02 12:55:17"
+        },
+        {
+            "event": "Voice loop error: recognition connection failed: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond",
+            "time": "2026-03-02 12:55:19"
+        },
+        {
+            "event": "Voice loop error: recognition connection failed: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond",
+            "time": "2026-03-02 12:55:19"
         }
     ],
     "conversations": {
         "user": [
             {
                 "user": "hello",
-                "sentinel": "My brain server is not reachable."
-            },
-            {
-                "user": "mad",
-                "sentinel": "My brain server is not reachable."
+                "sentinel": "Hello\u2014I'm Sentinel, your desktop AI assistant.  \nWhat would you like to do next (open an app, find a file, set a reminder, troubleshoot something, or automate a task)?"
             },
             {
                 "user": "hello",
-                "sentinel": "Hello\u2014I\u2019m Sentinel, your desktop AI assistant. Tell me what you want to do (e.g., open an app, find a file, summarize a document, draft an email, troubleshoot something), and I\u2019ll guide the next steps."
+                "sentinel": "Error fetching response: 502 Server Error: Bad Gateway for url: http://127.0.0.1:8000/brain"
             },
             {
-                "user": "are you mad",
-                "sentinel": "I\u2019m not mad\u2014I don\u2019t have feelings. I\u2019m Sentinel, your desktop assistant.\n\nIf something I said or did came off wrong, tell me what happened (or paste the message), and I\u2019ll fix it or help you next."
+                "user": "hello",
+                "sentinel": "Hello\u2014I'm Sentinel, your desktop AI assistant.\n\nWhat would you like to do? I can help you:\n- open or close apps\n- find files or organize folders\n- draft or summarize text\n- troubleshoot your system settings\n- set reminders and track tasks\n\nTell me your goal (and your OS: Windows/macOS/Linux if relevant)."
             },
             {
-                "user": "are you listening to me",
-                "sentinel": "Yes\u2014I\u2019m listening.\n\nI\u2019m Sentinel, your desktop AI assistant. Tell me what you want to do, or what\u2019s going wrong, and I\u2019ll help with the next steps."
+                "user": "open notepad",
+                "sentinel": "Opening notepad"
             },
             {
-                "user": "what can you do for me",
-                "sentinel": "I\u2019m Sentinel, your desktop AI assistant. Here\u2019s what I can do for you:\n\n- **Answer questions & explain things**: research-style help, summaries, step-by-step guidance.\n- **Write & edit**: emails, reports, resumes, documentation, posts; rewrite for tone/clarity.\n- **Plan & organize**: to-do lists, schedules, meeting agendas, project breakdowns.\n- **Troubleshoot**: help diagnose software issues, interpret errors, suggest fixes.\n- **Work with files & text**: analyze/polish content you paste; extract key points from documents.\n- **Image help** (if you share one): describe what\u2019s on screen, read text, explain charts.\n- **Desktop actions (when enabled in your local app)**: open apps, navigate basic workflows, and run safe system tasks you approve.\n\nTell me what you\u2019re trying to accomplish right now (e.g., \u201cwrite an email,\u201d \u201cfix a PC issue,\u201d \u201cplan my day,\u201d \u201canalyze this document\u201d), and if you want me to perform desktop actions or just give instructions."
+                "user": "open downloads",
+                "sentinel": "Opening C:\\Users\\Devoyager\\Downloads"
+            },
+            {
+                "user": "open chrome",
+                "sentinel": "Opening chrome"
+            },
+            {
+                "user": "open terminal",
+                "sentinel": "Opening terminal"
+            },
+            {
+                "user": "type hello",
+                "sentinel": "Hello.\n\nI\u2019m Sentinel, your desktop AI assistant. Tell me what you want to do next (open an app, search a file, draft text, or run a safe system task)."
+            },
+            {
+                "user": "open documents",
+                "sentinel": "Opening C:\\Users\\Devoyager\\Documents"
+            },
+            {
+                "user": "what is my name",
+                "sentinel": "I don\u2019t know your name yet\u2014I haven\u2019t been told.  \nTell me what you\u2019d like to be called, and I\u2019ll remember it for next time."
+            },
+            {
+                "user": "my name is kehinde",
+                "sentinel": "Hello Kehinde \u2014 I\u2019m Sentinel, your desktop AI assistant.\n\nGot it: your name is **Kehinde**. What would you like to do next?"
+            },
+            {
+                "user": "what is my name",
+                "sentinel": "Error fetching response: HTTPConnectionPool(host='127.0.0.1', port=8000): Read timed out. (read timeout=30)"
+            },
+            {
+                "user": "hello",
+                "sentinel": "Hello \u2014 I\u2019m Sentinel, your desktop AI assistant.\n\nWhat would you like to do next? For example:\n- open an app or website\n- find a file\n- summarize or draft a document/email\n- troubleshoot something on your computer"
+            },
+            {
+                "user": "open chagpt",
+                "sentinel": "Opening chagpt"
+            },
+            {
+                "user": "open edge",
+                "sentinel": "Opening edge"
+            },
+            {
+                "user": "who are you",
+                "sentinel": "I\u2019m Sentinel \u2014 your desktop AI robot assistant (Sentinel Prime). I can help you plan tasks, answer questions, and, where allowed, control approved apps to run safe system actions.\n\nWhat do you want to do today\u2014get info, automate something on your computer, or troubleshoot an issue?"
             }
         ]
     }
