@@ -16,7 +16,7 @@ BACKEND_URL = "http://127.0.0.1:8000/brain"
 AUTONOMOUS_HEARING = True
 
 _speaking_callback: Optional[Callable[[bool], None]] = None
-_ui_reply_callback: Optional[Callable[[str], None]] = None
+
 
 speech_queue: Queue = Queue()
 
@@ -43,9 +43,6 @@ def set_speaking_callback(callback: Callable[[bool], None]):
     _speaking_callback = callback
 
 
-def set_ui_reply_callback(callback: Callable[[str], None]):
-    global _ui_reply_callback
-    _ui_reply_callback = callback
 
 
 def _notify_speaking(state: bool):
@@ -77,7 +74,7 @@ def _speech_worker():
 threading.Thread(target=_speech_worker, daemon=True).start()
 
 
-def speak(text: str):
+def speak(text: str, interrupt: bool = True):
     if not text:
         return
 
@@ -85,16 +82,17 @@ def speak(text: str):
     if not clean:
         return
 
-    # Send to UI immediately
-    if _ui_reply_callback:
+    # Optional interrupt mode
+    if interrupt:
         try:
-            _ui_reply_callback(clean)
+            engine.stop()
+            while not speech_queue.empty():
+                speech_queue.get_nowait()
+                speech_queue.task_done()
         except Exception:
             pass
 
-    # Queue for TTS
     speech_queue.put(clean)
-
     max_len = 240
     parts = [p.strip() for p in re.split(r"(?<=[.!?])\s+", clean) if p.strip()]
     if not parts:
@@ -176,7 +174,6 @@ def process_command(command: str):
     if "what is your name" in lowered or "who are you" in lowered:
         reply = "My name is Sentinel."
         memory.remember_conversation("user", text, reply)
-        speak(reply)
         return reply
 
     if "what is my name" in lowered or "who am i" in lowered:
@@ -186,7 +183,6 @@ def process_command(command: str):
         else:
             reply = "I do not know your name yet. Tell me by saying my name is..."
         memory.remember_conversation("user", text, reply)
-        speak(reply)
         return reply
 
     detected_name = _extract_name(text)

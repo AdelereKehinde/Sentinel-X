@@ -269,10 +269,12 @@ class SentinelUI(QWidget):
 
     def _run_command(self, command):
         reply = process_command(command)
+
         if reply:
             self.append_chat("Sentinel", reply)
+            speak(reply)
+
         self.ui_queue.put(("status", "Mode: Listening"))
-        
     def process_ui_queue(self):
         while not self.ui_queue.empty():
             event, value = self.ui_queue.get()
