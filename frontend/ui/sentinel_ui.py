@@ -222,14 +222,13 @@ class SentinelUI(QWidget):
         threading.Thread(target=self._run_command, args=(command,), daemon=True).start()
 
     def _run_command(self, command):
-        reply = process_command(command)
+        reply = process_command(command)  # backend reply
         if reply:
-            # 1️⃣ Push to chat window
+            # Update chat UI immediately
             self.ui_queue.put(("reply", reply))
-            # 2️⃣ Speak the reply aloud
+            # Speak immediately
             speak(reply)
         self.ui_queue.put(("status", "Mode: Listening"))
-
     def process_ui_queue(self):
         while not self.ui_queue.empty():
             event, value = self.ui_queue.get()

@@ -24,13 +24,11 @@ from ai_modules.voice_engine import speak, listen_loop
 # IDLE THOUGHT LOOP
 # ======================
 def run_idle_loop():
-    """
-    Continuously checks idle thoughts and speaks them.
-    """
+    """Continuously checks idle thoughts and speaks them immediately."""
     while True:
-        idle_text = idle_engine.check_idle()  # should return string or None
+        idle_text = idle_engine.check_idle()  # returns string or None
         if idle_text:
-            speak(idle_text)
+            speak(idle_text)  # now sends to UI & speaks
         time.sleep(5)
 
 # ======================

@@ -1,6 +1,7 @@
 import os
 import threading
 from queue import Queue
+import time
 from typing import Callable, Optional
 
 import pyttsx3
@@ -85,12 +86,22 @@ threading.Thread(target=_speech_worker, daemon=True).start()
 
 
 def speak(text: str):
-    """Speak ANY text and log it."""
+    """Speak ANY text, push to UI, and log it immediately."""
     if not text:
         return
 
+    # Push immediately to UI queue if callback exists
+    if _ui_reply_callback:
+        try:
+            _ui_reply_callback(text)
+        except Exception:
+            pass
+
+    # Add to speech queue (async speaking)
     speech_queue.put(text)
-    memory.log_event(f"{text}")
+
+    # Log to memory
+    memory.log_event(text)
 
     # Also push to UI chat if available
     if _ui_reply_callback:
@@ -174,22 +185,18 @@ def listen_loop(command_callback=None):
 
 
 def speak_log_watcher():
-    """Speaks any new log entries automatically."""
+    """Speaks any new log entries immediately as text in UI."""
     last_count = 0
-
     while True:
         logs = memory.get_logs()
-
         if len(logs) > last_count:
             new_logs = logs[last_count:]
-
             for item in new_logs:
                 text = item.get("event", "")
                 if text and not text.lower().startswith("user said"):
-                    speak(text)
-
+                    speak(text)  # speak & send to UI immediately
             last_count = len(logs)
-
+        time.sleep(1)
 
 # Start log watcher thread
 threading.Thread(target=speak_log_watcher, daemon=True).start()
