@@ -804,6 +804,26 @@
         {
             "event": "Idle thought: I am learning from our interactions.",
             "time": "2026-03-02 03:20:15"
+        },
+        {
+            "event": "Sentinel said: My name is Sentinel. I am online and listening.",
+            "time": "2026-03-02 09:55:50"
+        },
+        {
+            "event": "Sentinel said: It is quiet here.",
+            "time": "2026-03-02 09:56:06"
+        },
+        {
+            "event": "Idle thought: It is quiet here.",
+            "time": "2026-03-02 09:56:06"
+        },
+        {
+            "event": "Sentinel said: I am learning from our interactions.",
+            "time": "2026-03-02 09:56:36"
+        },
+        {
+            "event": "Idle thought: I am learning from our interactions.",
+            "time": "2026-03-02 09:56:36"
         }
     ],
     "conversations": {

@@ -2,6 +2,7 @@ import sys
 from datetime import datetime
 from queue import Queue
 from threading import Thread
+from tkinter.font import names
 
 import cv2
 from PyQt5.QtCore import QTimer, Qt
@@ -20,7 +21,7 @@ from PyQt5.QtWidgets import (
 )
 
 from ai_modules.memory_engine import memory
-from ai_modules.vision_engine import cap, detect_objects, get_vision_status, recognize_faces
+from ai_modules.vision_engine import camera, detect_objects, get_vision_status, detect_faces
 from ai_modules.voice_engine import listen_loop, process_command, set_speaking_callback
 
 
@@ -223,13 +224,13 @@ class SentinelUI(QWidget):
 
     def update_camera(self):
         self.vision_status_label.setText(f"Vision: {get_vision_status()}")
-        ret, frame = cap.read()
-        if not ret:
+        frame = camera.read()
+        if frame is None:
             return
 
-        face_locations, names = recognize_faces(frame)
+        frame, names = detect_faces(frame)
         self.face_count_label.setText(f"Faces: {len(names)}")
-        for (top, right, bottom, left), name in zip(face_locations, names):
+        for (top, right, bottom, left), name in zip(frame, names):
             cv2.rectangle(frame, (left, top), (right, bottom), (255, 140, 80), 2)
             cv2.putText(
                 frame,
@@ -294,6 +295,9 @@ class SentinelUI(QWidget):
         Thread(target=listen_loop, daemon=True).start()
         self.voice_started = True
 
+    def closeEvent(self, event):
+        camera.stop()
+        event.accept()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

@@ -1,187 +1,212 @@
 import os
 import cv2
-import numpy as np
+import time
+import threading
+from collections import deque
 
 from ai_modules.autonomous_mode import controller
 
-cap = cv2.VideoCapture(0)
+# ---------------- CONFIG ---------------- #
+CONFIDENCE_THRESHOLD = 0.5
+FPS_LIMIT = 10
+CAMERA_INDEX = 0
+YOLO_MODEL_NAME = "yolo26n.pt"  # your model
+
+# Memory window for recent detections
+DETECTION_MEMORY = deque(maxlen=30)
+
+# ---------------------------------------- #
+
+# Face detector (fast, offline)
 face_cascade = cv2.CascadeClassifier(
     cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
 )
 
-ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROJECT_ROOT = os.path.dirname(ROOT_DIR)
-MODEL_DIRS = [
-    os.path.join(ROOT_DIR, "models", "yolo"),
-    os.path.join(PROJECT_ROOT, "backend", "models", "yolo"),
-]
-
-# torch is optional – a failed DLL load or missing package must not crash us.
-try:
-    import torch
-    TORCH_AVAILABLE = True
-except Exception as exc:
-    print(f"[vision_engine] warning – torch import failed: {exc}")
-    TORCH_AVAILABLE = False
-
+# YOLO setup (Ultralytics local)
+YOLO_AVAILABLE = False
 model = None
-vision_status = "Face + people detection (offline)"
+vision_status = "Offline mode (face + people)"
 
-# Offline fallback: no download required, detects people only.
+try:
+    from ultralytics import YOLO
+
+    ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+    MODEL_PATH = os.path.join(ROOT_DIR, "models", "yolo", YOLO_MODEL_NAME)
+
+    if os.path.exists(MODEL_PATH):
+        model = YOLO(MODEL_PATH)
+        YOLO_AVAILABLE = True
+        vision_status = f"YOLO active ({YOLO_MODEL_NAME})"
+        print(f"[vision_engine] YOLO loaded from {MODEL_PATH}")
+    else:
+        print("[vision_engine] YOLO model not found, using fallback")
+
+except Exception as e:
+    print(f"[vision_engine] YOLO init failed: {e}")
+
+# HOG fallback for people
 hog = cv2.HOGDescriptor()
 hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 
 
-def _find_yolo_pt_file():
-    """Search for yolov5n.pt in model directories."""
-    for model_dir in MODEL_DIRS:
-        pt_path = os.path.join(model_dir, "yolov5n.pt")
-        if os.path.exists(pt_path):
-            return pt_path
-    return None
+# -------- THREAD SAFE CAMERA -------- #
+class CameraStream:
+    def __init__(self, index=0):
+        self.cap = cv2.VideoCapture(index)
+        self.running = False
+        self.frame = None
+        self.lock = threading.Lock()
+
+    def start(self):
+        if self.running:
+            return
+        self.running = True
+        threading.Thread(target=self.update, daemon=True).start()
+
+    def update(self):
+        while self.running:
+            ret, frame = self.cap.read()
+            if ret:
+                with self.lock:
+                    self.frame = frame
+
+    def read(self):
+        with self.lock:
+            return self.frame.copy() if self.frame is not None else None
+
+    def stop(self):
+        self.running = False
+        self.cap.release()
 
 
-def _load_yolo():
-    global model, vision_status
-    if not TORCH_AVAILABLE:
-        print("[vision_engine] torch not available – skipping YOLO")
-        return
-
-    try:
-        pt_file = _find_yolo_pt_file()
-        if not pt_file:
-            raise FileNotFoundError(
-                "yolov5n.pt not found. Place yolov5n.pt in "
-                "frontend/models/yolo or backend/models/yolo."
-            )
-
-        print(f"[vision_engine] Loading YOLO from {pt_file}")
-        model = torch.hub.load("ultralytics/yolov5", "custom", path=pt_file)
-        vision_status = "YOLO active (YOLOv5)"
-        print("[vision_engine] YOLO loaded successfully (yolov5n.pt).")
-    except Exception as exc:
-        model = None
-        vision_status = f"Face + people detection (offline) | YOLO unavailable: {exc}"
-        print(f"[vision_engine] warning - YOLO unavailable: {exc}")
+camera = CameraStream(CAMERA_INDEX)
 
 
-_load_yolo()
-
-
-def get_vision_status():
-    return vision_status
-
-
-def recognize_faces(frame):
+# -------- DETECTION FUNCTIONS -------- #
+def detect_faces(frame):
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    detections = face_cascade.detectMultiScale(
-        gray, scaleFactor=1.1, minNeighbors=5, minSize=(40, 40)
-    )
+    detections = face_cascade.detectMultiScale(gray, 1.2, 5)
 
-    face_locations = []
     names = []
     for (x, y, w, h) in detections:
-        top, right, bottom, left = y, x + w, y + h, x
-        face_locations.append((top, right, bottom, left))
         names.append("Person")
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 80, 80), 2)
+        cv2.putText(frame, "Person", (x, y - 10),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 80, 80), 2)
 
-    return face_locations, names
+    return frame, names
 
 
-def _detect_with_yolo(frame):
-    """Detect objects using YOLOv5 model."""
-    results = model(frame)
-    detections = results.pandas().xyxy[0]
-    
+def detect_with_yolo(frame):
     objects = []
-    for _, row in detections.iterrows():
-        label = row["name"]
-        confidence = row["confidence"]
-        
-        if confidence > 0.5:
+
+    results = model(frame, conf=CONFIDENCE_THRESHOLD, verbose=False)
+
+    for r in results:
+        for box in r.boxes:
+            cls = int(box.cls[0])
+            label = model.names[cls]
+            conf = float(box.conf[0])
+
+            if conf < CONFIDENCE_THRESHOLD:
+                continue
+
             objects.append(label)
-            x1 = int(row["xmin"])
-            y1 = int(row["ymin"])
-            x2 = int(row["xmax"])
-            y2 = int(row["ymax"])
+
+            x1, y1, x2, y2 = map(int, box.xyxy[0])
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 200, 80), 2)
             cv2.putText(
                 frame,
-                label,
+                f"{label} {conf:.2f}",
                 (x1, y1 - 10),
                 cv2.FONT_HERSHEY_SIMPLEX,
                 0.6,
                 (0, 200, 80),
                 2,
             )
-    
+
     return frame, objects
 
 
-def _detect_people_offline(frame):
-    """Fallback: detect people using HOG descriptor."""
-    rects, _ = hog.detectMultiScale(
-        frame, winStride=(8, 8), padding=(8, 8), scale=1.05
-    )
+def detect_people_hog(frame):
+    rects, _ = hog.detectMultiScale(frame, winStride=(8, 8))
     objects = []
+
     for (x, y, w, h) in rects:
         objects.append("person")
         cv2.rectangle(frame, (x, y), (x + w, y + h), (70, 170, 255), 2)
-        cv2.putText(
-            frame,
-            "person",
-            (x, y - 10),
-            cv2.FONT_HERSHEY_SIMPLEX,
-            0.6,
-            (70, 170, 255),
-            2,
-        )
+        cv2.putText(frame, "person", (x, y - 10),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.6, (70, 170, 255), 2)
+
     return frame, objects
 
 
-def detect_objects(frame):
-    """Detect objects using YOLO or fallback to offline people detection."""
-    if model is not None:
-        try:
-            return _detect_with_yolo(frame)
-        except Exception as exc:
-            print(f"[vision_engine] warning - YOLO inference failed, using fallback: {exc}")
-    return _detect_people_offline(frame)
-
-
+# -------- MAIN VISION LOOP -------- #
 def start_vision():
-    print("Sentinel vision activated.")
-    last_objects = []
-    last_names = []
+    print("[vision_engine] Sentinel vision started")
+    camera.start()
 
-    while True:
-        ret, frame = cap.read()
-        if not ret:
-            break
+    last_time = 0
 
-        face_locations, names = recognize_faces(frame)
-        for (top, right, bottom, left), name in zip(face_locations, names):
-            cv2.rectangle(frame, (left, top), (right, bottom), (255, 80, 80), 2)
-            cv2.putText(
-                frame,
-                name,
-                (left, top - 10),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                0.6,
-                (255, 80, 80),
-                2,
-            )
+    try:
+        while True:
+            frame = camera.read()
+            if frame is None:
+                continue
 
-        frame, objects = detect_objects(frame)
-        if objects:
-            last_objects = list(set(objects))
-        if names:
-            last_names = names
+            # FPS limiter
+            if time.time() - last_time < 1 / FPS_LIMIT:
+                continue
+            last_time = time.time()
 
-        cv2.imshow("Sentinel Vision", frame)
-        if cv2.waitKey(1) & 0xFF == ord("q"):
-            break
+            # Face detection
+            frame, names = detect_faces(frame)
 
-    cap.release()
-    cv2.destroyAllWindows()
-    controller.process_environment(last_objects, last_names)
+            # Object detection
+            if YOLO_AVAILABLE:
+                frame, objects = detect_with_yolo(frame)
+            else:
+                frame, objects = detect_people_hog(frame)
+
+            # Store short-term memory
+            if objects or names:
+                DETECTION_MEMORY.append({
+                    "objects": list(set(objects)),
+                    "faces": names,
+                    "time": time.time()
+                })
+
+            # Display
+            cv2.imshow("Sentinel Vision", frame)
+
+            # Send environment snapshot to autonomous brain
+            if len(DETECTION_MEMORY) >= 5:
+                snapshot = DETECTION_MEMORY[-1]
+                controller.process_environment(
+                    snapshot["objects"],
+                    snapshot["faces"]
+                )
+
+            # Exit key
+            if cv2.waitKey(1) & 0xFF == ord("q"):
+                break
+
+    finally:
+        camera.stop()
+        cv2.destroyAllWindows()
+        print("[vision_engine] Vision stopped")
+
+
+def detect_objects(frame):
+    """
+    Main detection function that uses YOLO if available, otherwise falls back to HOG.
+    Returns: (processed_frame, list_of_objects)
+    """
+    if YOLO_AVAILABLE:
+        return detect_with_yolo(frame)
+    else:
+        return detect_people_hog(frame)
+
+
+def get_vision_status():
+    return vision_status
