@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Body
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from database import Base, engine, get_db
@@ -65,18 +65,29 @@ def create_log(log: schemas.LogCreate, db: Session = Depends(get_db)):
 @app.post("/brain")
 def brain(
     input_text: str | None = None,
-    payload: BrainRequest | None = None,
+    payload: BrainRequest | None = Body(default=None),
     db: Session = Depends(get_db),
 ):
-    text = input_text
+    candidates = []
     if payload is not None:
-        text = payload.input_text or payload.message or text
+        candidates.extend([payload.input_text, payload.message])
+    candidates.append(input_text)
+
+    text = None
+    for item in candidates:
+        value = (item or "").strip()
+        if value and value.lower() != "string":
+            text = value
+            break
 
     if not text:
-        raise HTTPException(status_code=422, detail="input_text or message is required")
+        raise HTTPException(
+            status_code=422,
+            detail="Provide a real question in input_text or message (not placeholder 'string').",
+        )
 
     try:
         response = ask_brain(text)
     except RuntimeError as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
-    return {"response": response}
+    return {"response": response, "input_text": text}

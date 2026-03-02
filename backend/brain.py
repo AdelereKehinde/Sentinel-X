@@ -1,80 +1,88 @@
 import os
+from pathlib import Path
+
 import requests
 from dotenv import load_dotenv
 
-load_dotenv()
+BACKEND_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = BACKEND_DIR.parent
+load_dotenv(BACKEND_DIR / ".env")
+load_dotenv(PROJECT_ROOT / "frontend" / ".env")
 
-API_KEY = os.getenv("OPENROUTER_API_KEY")
-MODEL = os.getenv("MODEL")
-# allow users to control token budget; defaults to a safe value to avoid 402 errors
+API_KEY = os.getenv("GEMINI_API_KEY")
+MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash-preview-04-17")
+
 try:
-    MAX_TOKENS = int(os.getenv("MAX_TOKENS", "2000"))
+    MAX_TOKENS = int(os.getenv("MAX_TOKENS", "700"))
 except ValueError:
-    MAX_TOKENS = 2000
-
-OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
-
-HEADERS = {
-    "Authorization": f"Bearer {API_KEY}",
-    "Content-Type": "application/json",
-}
+    MAX_TOKENS = 700
 
 SYSTEM_PROMPT = """
-You are Sentinel Prime, a desktop AI robot assistant.
-You control allowed apps, remember users, and execute safe system tasks through the local app.
-Your name is Sentinel.
-When greeted or awakened, briefly introduce yourself as Sentinel.
-Respond briefly, clearly, and with practical next actions.
+You are Sentinel Prime, a desktop AI voice assistant.
+Rules:
+- Speak like a natural person, not a formal AI.
+- Give useful detail by default: normally 3-6 short sentences.
+- Avoid jargon and long disclaimers.
+- Be practical and direct.
+- If asked your name, say you are Sentinel.
+- Do not just echo the user's words. Answer the actual question clearly.
 """
 
 
 def ask_brain(user_input: str) -> str:
     if not API_KEY:
-        raise RuntimeError("Missing OPENROUTER_API_KEY in environment.")
-    if not MODEL:
-        raise RuntimeError("Missing MODEL in environment.")
+        raise RuntimeError("Missing GEMINI_API_KEY in environment.")
 
-    data = {
-        "model": MODEL,
-        "messages": [
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": user_input},
+    url = (
+        f"https://generativelanguage.googleapis.com/v1/models/{MODEL}:generateContent"
+        f"?key={API_KEY}"
+    )
+
+    # IMPORTANT: For Gemini 2.5, system prompt goes in the user message content
+    # or use a separate approach
+    payload = {
+        "contents": [
+            {
+                "role": "user",
+                "parts": [
+                    {"text": f"{SYSTEM_PROMPT}\n\nUser query: {user_input}"}
+                ],
+            }
         ],
-        # limit tokens to avoid credit errors; can be overridden via env var
-        "max_tokens": MAX_TOKENS,
+        "generationConfig": {
+            "maxOutputTokens": MAX_TOKENS,
+            "temperature": 0.7,
+            "topP": 0.9,
+        },
     }
 
     try:
-        response = requests.post(OPENROUTER_URL, headers=HEADERS, json=data, timeout=30)
+        response = requests.post(url, json=payload, timeout=30)
     except requests.RequestException as exc:
-        raise RuntimeError(f"Failed to reach brain provider: {exc}") from exc
+        raise RuntimeError(f"Failed to reach Gemini: {exc}") from exc
 
     try:
         result = response.json()
     except ValueError as exc:
         raise RuntimeError(
-            f"Brain provider returned non-JSON response (status {response.status_code})."
+            f"Gemini returned non-JSON response (status {response.status_code})."
         ) from exc
 
     if response.status_code >= 400:
-        error_message = result.get("error", {}).get("message") or result.get("message")
-        # add hint for common token/credit problem
-        hint = ""
-        if response.status_code == 402:
-            hint = " (try lowering MAX_TOKENS or adding credits at https://openrouter.ai/settings/credits)"
-        raise RuntimeError(
-            f"Brain provider request failed (status {response.status_code}): {error_message or 'Unknown error'}{hint}"
-        )
+        message = result.get("error", {}).get("message") or result
+        raise RuntimeError(f"Gemini request failed (status {response.status_code}): {message}")
 
-    choices = result.get("choices")
-    if not choices:
-        error_message = result.get("error", {}).get("message") or result.get("message")
-        raise RuntimeError(
-            f"Brain provider response missing choices: {error_message or result}"
-        )
+    candidates = result.get("candidates") or []
+    if not candidates:
+        raise RuntimeError(f"Gemini response missing candidates: {result}")
 
-    content = choices[0].get("message", {}).get("content")
-    if not content:
-        raise RuntimeError("Brain provider response missing message content.")
+    # Extract text from response
+    try:
+        content = candidates[0].get("content", {})
+        parts = content.get("parts", [])
+        text = "".join(part.get("text", "") for part in parts if isinstance(part, dict))
+        return text.strip()
+    except Exception as e:
+        raise RuntimeError(f"Failed to parse response: {e}\nResponse: {result}")
 
-    return content
+    return ""

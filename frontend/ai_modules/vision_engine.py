@@ -31,7 +31,8 @@ try:
     from ultralytics import YOLO
 
     ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-    MODEL_PATH = os.path.join(ROOT_DIR, "models", "yolo", YOLO_MODEL_NAME)
+    FRONTEND_ROOT = os.path.dirname(ROOT_DIR)
+    MODEL_PATH = os.path.join(FRONTEND_ROOT, "models", "yolo", YOLO_MODEL_NAME)
 
     if os.path.exists(MODEL_PATH):
         model = YOLO(MODEL_PATH)

@@ -109,6 +109,35 @@ def _list_folder(path: str) -> str:
         return "I could not list that folder."
 
 
+def _run_terminal(command: str) -> str:
+    if not command.strip():
+        return "Tell me which terminal command to run."
+
+    try:
+        result = subprocess.run(
+            ["powershell", "-NoProfile", "-Command", command],
+            capture_output=True,
+            text=True,
+            timeout=20,
+            shell=False,
+        )
+    except subprocess.TimeoutExpired:
+        return "Terminal command timed out after 20 seconds."
+    except Exception as exc:
+        return f"I could not run that terminal command: {exc}"
+
+    output = (result.stdout or "").strip()
+    error = (result.stderr or "").strip()
+
+    if result.returncode != 0:
+        msg = error or output or f"Command failed with code {result.returncode}."
+        return f"Terminal command failed: {msg[:800]}"
+
+    if not output:
+        return "Terminal command completed with no output."
+    return f"Terminal output: {output[:1200]}"
+
+
 def execute_command(command: str):
     cmd = command.lower().strip()
 
@@ -153,6 +182,15 @@ def execute_command(command: str):
 
     if cmd.startswith("open app "):
         return _open_app(command[9:].strip())
+
+    if cmd.startswith("run command "):
+        return _run_terminal(command[12:].strip())
+
+    if cmd.startswith("terminal "):
+        return _run_terminal(command[9:].strip())
+
+    if cmd.startswith("powershell "):
+        return _run_terminal(command[11:].strip())
 
     if cmd.startswith("open "):
         target = command[5:].strip()
