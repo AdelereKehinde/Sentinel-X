@@ -60,14 +60,15 @@ def _speech_worker():
     while True:
         text = speech_queue.get()
         if text is None:
-            break
+            continue
 
-        _notify_speaking(True)
         try:
+            _notify_speaking(True)
+            engine.stop()
             engine.say(text)
             engine.runAndWait()
         except Exception as exc:
-            memory.log_event(f"TTS error: {exc}")
+            print("TTS error:", exc)
         finally:
             _notify_speaking(False)
             speech_queue.task_done()
@@ -84,15 +85,16 @@ def speak(text: str):
     if not clean:
         return
 
+    # Send to UI immediately
     if _ui_reply_callback:
         try:
             _ui_reply_callback(clean)
         except Exception:
             pass
 
-    memory.log_event(f"Sentinel: {clean}")
-    # Split long text into shorter chunks so pyttsx3 reliably speaks
-    # Gemini replies, logs, and conversation summaries.
+    # Queue for TTS
+    speech_queue.put(clean)
+
     max_len = 240
     parts = [p.strip() for p in re.split(r"(?<=[.!?])\s+", clean) if p.strip()]
     if not parts:

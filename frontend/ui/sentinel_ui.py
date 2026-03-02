@@ -6,7 +6,7 @@ from threading import Thread
 
 import cv2
 from PyQt5.QtCore import QEasingCurve, Qt, QPropertyAnimation, QTimer, QVariantAnimation
-from PyQt5.QtGui import QColor, QImage, QPixmap
+from PyQt5.QtGui import QColor, QImage, QPixmap, QTextCursor
 from PyQt5.QtWidgets import (
     QApplication,
     QFrame,
@@ -31,7 +31,6 @@ from ai_modules.voice_engine import (
     set_ui_reply_callback,
     speak,
 )
-
 
 class SentinelUI(QWidget):
     def __init__(self):
@@ -85,12 +84,12 @@ class SentinelUI(QWidget):
 
         self.robot_face = QLabel("o   o")
         self.robot_face.setAlignment(Qt.AlignCenter)
-        self.robot_face.setStyleSheet("font-size: 54px; color: #0d6fd1; font-weight: 700;")
+        self.robot_face.setStyleSheet("font-size: 54px; color: #1468c3; font-weight: 700;")
         left_layout.addWidget(self.robot_face)
 
         self.robot_mouth = QLabel("------")
         self.robot_mouth.setAlignment(Qt.AlignCenter)
-        self.robot_mouth.setStyleSheet("font-size: 30px; color: #0a9a86; letter-spacing: 2px;")
+        self.robot_mouth.setStyleSheet("font-size: 30px; color: #0c8f80; letter-spacing: 2px;")
         left_layout.addWidget(self.robot_mouth)
 
         self.voice_indicator = QLabel("Voice: standby")
@@ -134,7 +133,7 @@ class SentinelUI(QWidget):
         self.camera_label = QLabel("Camera loading...")
         self.camera_label.setAlignment(Qt.AlignCenter)
         self.camera_label.setMinimumSize(710, 500)
-        self.camera_label.setStyleSheet("border: 1px solid #77b0ef; border-radius: 12px;")
+        self.camera_label.setStyleSheet("border: 1px solid #79aee8; border-radius: 12px; background: rgba(248, 253, 255, 0.55);")
         right_layout.addWidget(self.camera_label)
 
         quick_row = QHBoxLayout()
@@ -216,8 +215,8 @@ class SentinelUI(QWidget):
         self.title_animation = QVariantAnimation(self)
         self.title_animation.setDuration(2200)
         self.title_animation.setLoopCount(-1)
-        self.title_animation.setStartValue(QColor("#0e4d9a"))
-        self.title_animation.setEndValue(QColor("#1ea0ff"))
+        self.title_animation.setStartValue(QColor("#0d4e9a"))
+        self.title_animation.setEndValue(QColor("#149d8c"))
         self.title_animation.valueChanged.connect(self._animate_title_color)
 
         QTimer.singleShot(120, self.left_fade.start)
@@ -256,7 +255,9 @@ class SentinelUI(QWidget):
 
     def append_chat(self, speaker, message):
         stamp = datetime.now().strftime("%H:%M:%S")
-        self.chat_history.append(f"[{stamp}] {speaker}: {message}")
+        self.chat_history.moveCursor(QTextCursor.End)
+        self.chat_history.insertPlainText(f"[{stamp}] {speaker}: {message}\n")
+        self.chat_history.moveCursor(QTextCursor.End)
 
     def send_command(self, text):
         command = text.strip()
@@ -267,9 +268,11 @@ class SentinelUI(QWidget):
         threading.Thread(target=self._run_command, args=(command,), daemon=True).start()
 
     def _run_command(self, command):
-        process_command(command)
+        reply = process_command(command)
+        if reply:
+            self.append_chat("Sentinel", reply)
         self.ui_queue.put(("status", "Mode: Listening"))
-
+        
     def process_ui_queue(self):
         while not self.ui_queue.empty():
             event, value = self.ui_queue.get()
@@ -295,10 +298,9 @@ class SentinelUI(QWidget):
         self.voice_started = True
 
     def check_idle_thought(self):
-        if self.is_speaking:
-            return
         thought = idle_engine.check_idle()
         if thought:
+            self.append_chat("Sentinel", thought)
             speak(thought)
 
     def animate_mouth(self):
@@ -336,53 +338,66 @@ class SentinelUI(QWidget):
         QWidget {
             background: qlineargradient(
                 x1:0, y1:0, x2:1, y2:1,
-                stop:0 #dff2ff,
-                stop:0.45 #cdeaf7,
-                stop:1 #c3e8df
+                stop:0 #d7ebff,
+                stop:0.35 #cde6ff,
+                stop:0.72 #c9ebe8,
+                stop:1 #b8dfd8
             );
-            color: #0e3557;
-            font-family: "Segoe UI", Calibri;
+            color: #123a61;
+            font-family: "Trebuchet MS", "Segoe UI", Calibri;
             font-size: 13px;
         }
         QFrame#panel {
-            background: rgba(236, 248, 255, 0.86);
-            border: 1px solid #7cb8e6;
-            border-radius: 14px;
+            background: rgba(233, 246, 255, 0.82);
+            border: 1px solid #7ab4e4;
+            border-radius: 16px;
         }
         QLabel#title {
             font-size: 30px;
             font-weight: 800;
             letter-spacing: 1px;
-            color: #0d5cb1;
+            color: #0d5cae;
         }
         QLabel#muted {
-            color: #1f638f;
+            color: #2b6289;
         }
         QTextEdit, QListWidget, QLineEdit {
-            background: rgba(232, 248, 255, 0.93);
-            border: 1px solid #84bddf;
-            border-radius: 10px;
+            background: rgba(245, 252, 255, 0.8);
+            border: 1px solid #8ec0df;
+            border-radius: 11px;
             padding: 8px;
-            color: #12385e;
+            color: #15466f;
+            selection-background-color: #a6d8cf;
+            selection-color: #0d3f46;
         }
         QPushButton {
-            background: #0f85df;
+            background: #137fd6;
             color: #f6fbff;
             border: 0;
-            border-radius: 9px;
+            border-radius: 10px;
             padding: 8px 12px;
             font-weight: 700;
         }
         QPushButton:hover {
-            background: #17a08e;
+            background: #0f9a88;
+        }
+        QPushButton:pressed {
+            background: #0b6db8;
         }
         QPushButton#secondary {
-            background: rgba(208, 241, 234, 0.95);
-            color: #176a78;
-            border: 1px solid #7bbec8;
+            background: rgba(201, 234, 229, 0.9);
+            color: #196271;
+            border: 1px solid #77b8c2;
         }
         QPushButton#secondary:hover {
-            background: #bde7df;
+            background: #b8e3d9;
+        }
+        QListWidget::item {
+            padding: 4px 2px;
+        }
+        QListWidget::item:selected {
+            background: rgba(156, 214, 205, 0.65);
+            border-radius: 6px;
         }
         """
 
