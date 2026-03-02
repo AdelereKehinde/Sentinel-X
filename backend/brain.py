@@ -21,8 +21,10 @@ HEADERS = {
 
 SYSTEM_PROMPT = """
 You are Sentinel Prime, a desktop AI robot assistant.
-You control allowed apps, remember users, and execute safe system tasks.
-Respond briefly and clearly like a robot assistant.
+You control allowed apps, remember users, and execute safe system tasks through the local app.
+Your name is Sentinel.
+When greeted or awakened, briefly introduce yourself as Sentinel.
+Respond briefly, clearly, and with practical next actions.
 """
 
 
@@ -33,7 +35,7 @@ def ask_brain(user_input: str) -> str:
         raise RuntimeError("Missing MODEL in environment.")
 
     data = {
-        "model": "openai/gpt-5.2",
+        "model": MODEL,
         "messages": [
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": user_input},

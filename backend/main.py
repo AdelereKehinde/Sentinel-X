@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
+from pydantic import BaseModel
 from database import Base, engine, get_db
 import models, schemas
 from brain import ask_brain
@@ -7,6 +8,11 @@ from brain import ask_brain
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Sentinel Prime Brain")
+
+
+class BrainRequest(BaseModel):
+    input_text: str | None = None
+    message: str | None = None
 
 # Initialize default settings
 @app.on_event("startup")
@@ -57,9 +63,20 @@ def create_log(log: schemas.LogCreate, db: Session = Depends(get_db)):
 
 # ------------------- BRAIN -------------------
 @app.post("/brain")
-def brain(input_text: str, db: Session = Depends(get_db)):
+def brain(
+    input_text: str | None = None,
+    payload: BrainRequest | None = None,
+    db: Session = Depends(get_db),
+):
+    text = input_text
+    if payload is not None:
+        text = payload.input_text or payload.message or text
+
+    if not text:
+        raise HTTPException(status_code=422, detail="input_text or message is required")
+
     try:
-        response = ask_brain(input_text)
+        response = ask_brain(text)
     except RuntimeError as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
     return {"response": response}

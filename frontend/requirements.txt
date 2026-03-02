@@ -1,14 +1,9 @@
 pyqt5
 opencv-python
-dlib-binary
-face-recognition
 numpy
 pillow
 pyttsx3
 speechrecognition
 pyaudio
-torch
-torchvision
-torchaudio
-ultralytics
+requests
 python-dotenv

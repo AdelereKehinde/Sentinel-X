@@ -1,6 +1,5 @@
 import time
 import random
-from ai_modules.voice_engine import speak
 from ai_modules.memory_engine import memory
 
 class IdleThoughtEngine:
@@ -22,6 +21,8 @@ class IdleThoughtEngine:
     def check_idle(self):
         if time.time() - self.last_activity > self.idle_interval:
             thought = random.choice(self.thoughts)
+            # Lazy import avoids circular dependency at module import time.
+            from ai_modules.voice_engine import speak
             speak(thought)
             memory.log_event(f"Idle thought: {thought}")
             self.last_activity = time.time()
