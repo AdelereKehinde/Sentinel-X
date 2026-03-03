@@ -13,9 +13,9 @@ API_KEY = os.getenv("GEMINI_API_KEY")
 MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash-preview-04-17")
 
 try:
-    MAX_TOKENS = int(os.getenv("MAX_TOKENS", "700"))
+    MAX_TOKENS = int(os.getenv("MAX_TOKENS", "750"))
 except ValueError:
-    MAX_TOKENS = 700
+    MAX_TOKENS = 750
 
 SYSTEM_PROMPT = """
 You are Sentinel Prime, a desktop AI voice assistant.

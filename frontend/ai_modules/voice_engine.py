@@ -2,6 +2,7 @@ import os
 import re
 import threading
 import time
+import importlib.util
 from queue import Queue
 from typing import Callable, Optional
 
@@ -16,6 +17,7 @@ BACKEND_URL = "http://127.0.0.1:8000/brain"
 AUTONOMOUS_HEARING = True
 
 _speaking_callback: Optional[Callable[[bool], None]] = None
+_ui_reply_callback: Optional[Callable[[str], None]] = None
 
 
 speech_queue: Queue = Queue()
@@ -23,8 +25,8 @@ speech_queue: Queue = Queue()
 recognizer = sr.Recognizer()
 recognizer.dynamic_energy_threshold = True
 recognizer.energy_threshold = 300
-recognizer.pause_threshold = 0.7
-recognizer.non_speaking_duration = 0.4
+recognizer.pause_threshold = 0.5
+recognizer.non_speaking_duration = 0.3
 
 engine = pyttsx3.init()
 engine.setProperty("rate", 175)
@@ -36,11 +38,26 @@ if voices:
 
 INTRODUCED = False
 LAST_RECOGNITION_ERROR_ANNOUNCE = 0.0
+OFFLINE_SPEECH_AVAILABLE = importlib.util.find_spec("pocketsphinx") is not None
+OFFLINE_SPEECH_WARNED = False
 
+AVAILABLE_VOICES = engine.getProperty("voices")
+
+def list_voices():
+    return [(i, v.name) for i, v in enumerate(AVAILABLE_VOICES)]
+
+def set_voice(index: int):
+    if 0 <= index < len(AVAILABLE_VOICES):
+        engine.setProperty("voice", AVAILABLE_VOICES[index].id)
 
 def set_speaking_callback(callback: Callable[[bool], None]):
     global _speaking_callback
     _speaking_callback = callback
+
+
+def set_ui_reply_callback(callback: Callable[[str], None]):
+    global _ui_reply_callback
+    _ui_reply_callback = callback
 
 
 
@@ -82,7 +99,12 @@ def speak(text: str, interrupt: bool = True):
     if not clean:
         return
 
-    # Optional interrupt mode
+    if _ui_reply_callback:
+        try:
+            _ui_reply_callback(clean)
+        except Exception:
+            pass
+
     if interrupt:
         try:
             engine.stop()
@@ -92,18 +114,17 @@ def speak(text: str, interrupt: bool = True):
         except Exception:
             pass
 
-    speech_queue.put(clean)
     max_len = 240
     parts = [p.strip() for p in re.split(r"(?<=[.!?])\s+", clean) if p.strip()]
     if not parts:
         parts = [clean]
+
     for part in parts:
         if len(part) <= max_len:
             speech_queue.put(part)
-            continue
-        for i in range(0, len(part), max_len):
-            speech_queue.put(part[i : i + max_len].strip())
-
+        else:
+            for i in range(0, len(part), max_len):
+                speech_queue.put(part[i:i+max_len].strip())
 
 def _extract_name(text: str) -> Optional[str]:
     lower = text.lower().strip()
@@ -147,13 +168,47 @@ def _ask_backend(command: str) -> str:
         response = requests.post(
             BACKEND_URL,
             json={"input_text": command},
-            timeout=30,
+            timeout=10,
         )
         response.raise_for_status()
         payload = response.json()
         return payload.get("response", "I do not have a response yet.")
     except Exception as exc:
         return f"I could not reach my brain right now: {exc}"
+
+
+def _pick_microphone_index() -> Optional[int]:
+    # User override wins if valid.
+    mic_index = os.getenv("MIC_INDEX")
+    if mic_index and mic_index.isdigit():
+        return int(mic_index)
+
+    try:
+        names = sr.Microphone.list_microphone_names()
+    except Exception:
+        return None
+
+    if not names:
+        return None
+
+    # Prefer real mic capture devices, avoid mapper/stereo mix/output.
+    preferred = []
+    for i, raw_name in enumerate(names):
+        name = (raw_name or "").lower()
+        score = 0
+        if "microphone" in name or "mic" in name:
+            score += 5
+        if "realtek" in name:
+            score += 2
+        if "mapper" in name:
+            score -= 3
+        if "stereo mix" in name or "output" in name or "speaker" in name:
+            score -= 5
+        preferred.append((score, i))
+
+    preferred.sort(reverse=True)
+    best_score, best_index = preferred[0]
+    return best_index if best_score > -1 else None
 
 
 def process_command(command: str):
@@ -174,6 +229,7 @@ def process_command(command: str):
     if "what is your name" in lowered or "who are you" in lowered:
         reply = "My name is Sentinel."
         memory.remember_conversation("user", text, reply)
+        speak(reply)
         return reply
 
     if "what is my name" in lowered or "who am i" in lowered:
@@ -183,6 +239,7 @@ def process_command(command: str):
         else:
             reply = "I do not know your name yet. Tell me by saying my name is..."
         memory.remember_conversation("user", text, reply)
+        speak(reply)
         return reply
 
     detected_name = _extract_name(text)
@@ -242,7 +299,7 @@ def process_command(command: str):
 
 
 def _recognize_audio(audio) -> Optional[str]:
-    global LAST_RECOGNITION_ERROR_ANNOUNCE
+    global LAST_RECOGNITION_ERROR_ANNOUNCE, OFFLINE_SPEECH_WARNED
 
     # Primary recognizer (online)
     try:
@@ -253,7 +310,10 @@ def _recognize_audio(audio) -> Optional[str]:
         memory.log_event(f"Speech service error: {exc}")
         now = time.time()
         if now - LAST_RECOGNITION_ERROR_ANNOUNCE > 45:
-            speak("I cannot reach online speech recognition. I will try offline mode.")
+            if OFFLINE_SPEECH_AVAILABLE:
+                speak("I cannot reach online speech recognition. I will try offline mode.")
+            else:
+                speak("I cannot reach online speech recognition. Type your command, or install offline speech support.")
             LAST_RECOGNITION_ERROR_ANNOUNCE = now
     except sr.UnknownValueError:
         return None
@@ -261,19 +321,22 @@ def _recognize_audio(audio) -> Optional[str]:
         memory.log_event(f"Speech recognition error: {exc}")
 
     # Offline fallback (requires pocketsphinx installed)
-    try:
-        offline_text = recognizer.recognize_sphinx(audio).strip()
-        if offline_text:
-            return offline_text.lower()
-    except Exception as exc:
-        memory.log_event(f"Offline speech unavailable: {exc}")
+    if OFFLINE_SPEECH_AVAILABLE:
+        try:
+            offline_text = recognizer.recognize_sphinx(audio).strip()
+            if offline_text:
+                return offline_text.lower()
+        except Exception as exc:
+            memory.log_event(f"Offline speech unavailable: {exc}")
+    elif not OFFLINE_SPEECH_WARNED:
+        memory.log_event("Offline speech unavailable: pocketsphinx is not installed.")
+        OFFLINE_SPEECH_WARNED = True
 
     return None
 
 
 def listen(timeout: int = 5, phrase_time_limit: int = 8):
-    mic_index = os.getenv("MIC_INDEX")
-    device_index = int(mic_index) if mic_index and mic_index.isdigit() else None
+    device_index = _pick_microphone_index()
 
     try:
         with sr.Microphone(device_index=device_index) as source:
@@ -296,11 +359,16 @@ def listen(timeout: int = 5, phrase_time_limit: int = 8):
 def listen_loop(command_callback=None):
     global INTRODUCED
 
-    mic_index = os.getenv("MIC_INDEX")
-    device_index = int(mic_index) if mic_index and mic_index.isdigit() else None
+    device_index = _pick_microphone_index()
+    try:
+        mic_names = sr.Microphone.list_microphone_names()
+        picked_name = mic_names[device_index] if device_index is not None and device_index < len(mic_names) else "default"
+        memory.log_event(f"Voice input device: {picked_name} (index={device_index})")
+    except Exception:
+        memory.log_event("Voice input device: unknown")
 
     with sr.Microphone(device_index=device_index) as source:
-        recognizer.adjust_for_ambient_noise(source, duration=1.0)
+        recognizer.adjust_for_ambient_noise(source, duration=0.7)
 
         if not INTRODUCED:
             speak("Hello, my name is Sentinel. What is your name?")
@@ -308,7 +376,7 @@ def listen_loop(command_callback=None):
 
         while True:
             try:
-                audio = recognizer.listen(source, timeout=3, phrase_time_limit=8)
+                audio = recognizer.listen(source, timeout=3, phrase_time_limit=10)
                 text = _recognize_audio(audio)
                 if text is None:
                     continue
