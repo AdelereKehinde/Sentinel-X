@@ -267,9 +267,24 @@ class SentinelUI(QWidget):
         
         # Futuristic window settings
         self.setWindowTitle("⚡ SENTINEL PRIME - AI ROBOT ASSISTANT ⚡")
-        self.setGeometry(80, 30, 1400, 880)
-        self.setAttribute(Qt.WA_TranslucentBackground)
-        self.setWindowFlags(Qt.FramelessWindowHint)
+        screen = QApplication.primaryScreen()
+        if screen:
+            available = screen.availableGeometry()
+            width = max(980, int(available.width() * 0.94))
+            height = max(680, int(available.height() * 0.94))
+            self.setGeometry(
+                available.x() + (available.width() - width) // 2,
+                available.y() + (available.height() - height) // 2,
+                width,
+                height,
+            )
+        else:
+            self.setGeometry(80, 30, 1280, 760)
+        # Keep a standard window for stability on Windows.
+        self.setAttribute(Qt.WA_TranslucentBackground, False)
+        self.setWindowFlags(Qt.Window)
+        self.setMinimumSize(980, 680)
+        QTimer.singleShot(0, self.showMaximized)
         
         self._build_ui()
         self._setup_timers()
@@ -277,17 +292,16 @@ class SentinelUI(QWidget):
         self._initialize_camera()
         self._setup_advanced_animations()
         self._setup_particle_system()
+
+        # Always greet and ask for name at startup.
+        QTimer.singleShot(900, self._startup_greeting)
         
         QTimer.singleShot(1300, self.start_voice)
         
     def _build_ui(self):
         # Main layout with margins for shadow effect
         main_layout = QVBoxLayout(self)
-        main_layout.setContentsMargins(20, 20, 20, 20)
-        
-        # Title bar for frameless window
-        title_bar = self._create_title_bar()
-        main_layout.addWidget(title_bar)
+        main_layout.setContentsMargins(8, 8, 8, 8)
         
         # Container for main content
         container = QFrame()
@@ -328,7 +342,7 @@ class SentinelUI(QWidget):
         left_layout = QVBoxLayout(self.left_panel)
         left_layout.setSpacing(15)
         
-        # Robot eyes and header
+        # Robot eyes
         eyes_layout = QHBoxLayout()
         self.left_eye = AnimatedRobotEye()
         self.right_eye = AnimatedRobotEye()
@@ -351,7 +365,8 @@ class SentinelUI(QWidget):
             background-clip: text;
             letter-spacing: 4px;
         """)
-        left_layout.addWidget(self.header_label)
+        # Hidden by request (remove top header text)
+        self.header_label.hide()
         
         # Status with circular progress
         status_layout = QHBoxLayout()
@@ -454,11 +469,12 @@ class SentinelUI(QWidget):
                 border: 2px solid #3060c0;
                 border-radius: 20px;
                 color: #d0f0ff;
-                font-size: 13px;
+                font-size: 14px;
                 padding: 15px;
                 selection-background-color: #4080ff;
             }
         """)
+        self.chat_history.setMinimumHeight(300)
         left_layout.addWidget(self.chat_history)
         
         # Command input with futuristic style
@@ -515,7 +531,7 @@ class SentinelUI(QWidget):
         
         self.camera_label = QLabel("INITIALIZING CAMERA...")
         self.camera_label.setAlignment(Qt.AlignCenter)
-        self.camera_label.setMinimumSize(750, 520)
+        self.camera_label.setMinimumSize(900, 560)
         self.camera_label.setStyleSheet("""
             border: 1px solid #3060a0;
             border-radius: 20px;
@@ -525,56 +541,7 @@ class SentinelUI(QWidget):
         """)
         camera_layout.addWidget(self.camera_label)
         right_layout.addWidget(camera_frame)
-        
-        # Quick action buttons
-        actions_label = QLabel("⚡ QUICK ACTIONS ⚡")
-        actions_label.setAlignment(Qt.AlignCenter)
-        actions_label.setStyleSheet("color: #80d0ff; font-size: 14px; padding: 5px;")
-        right_layout.addWidget(actions_label)
-        
-        quick_row = QHBoxLayout()
-        quick_actions = [
-            ("📝 NOTEPAD", "open app notepad"),
-            ("📋 LOGS", "read logs"),
-            ("💬 CONVERSATION", "read conversation"),
-            ("⏰ TIME", "what time is it"),
-            ("📁 DIRECTORY", "run command dir"),
-            ("👨 MALE", "__voice_male__"),
-            ("👩 FEMALE", "__voice_female__"),
-        ]
-        
-        for label, cmd in quick_actions:
-            btn = HolographicButton(label)
-            btn.clicked.connect(lambda _, x=cmd: self.send_command(x))
-            quick_row.addWidget(btn)
-        right_layout.addLayout(quick_row)
-        
-        # Detected objects with futuristic list
-        objects_label = QLabel("📡 DETECTED OBJECTS")
-        objects_label.setStyleSheet("color: #80d0ff; font-size: 14px;")
-        right_layout.addWidget(objects_label)
-        
-        self.objects_list = QListWidget()
-        self.objects_list.setStyleSheet("""
-            QListWidget {
-                background: rgba(0, 20, 40, 200);
-                border: 2px solid #3060c0;
-                border-radius: 15px;
-                color: #d0f0ff;
-                padding: 10px;
-                font-size: 12px;
-            }
-            QListWidget::item {
-                padding: 5px;
-                border-bottom: 1px solid #204080;
-            }
-            QListWidget::item:selected {
-                background: #3060c0;
-                border-radius: 8px;
-            }
-        """)
-        self.objects_list.setMaximumHeight(120)
-        right_layout.addWidget(self.objects_list)
+        self.objects_list = None
         
         # Recent logs
         logs_label = QLabel("📜 SYSTEM LOGS")
@@ -597,6 +564,7 @@ class SentinelUI(QWidget):
                 border-bottom: 1px solid #204080;
             }
         """)
+        self.logs_list.setMinimumHeight(190)
         right_layout.addWidget(self.logs_list)
         
         # Set glass panel style
@@ -614,7 +582,9 @@ class SentinelUI(QWidget):
             """)
         
         root.addWidget(self.left_panel, 2)
-        root.addWidget(self.right_panel, 3)
+        root.addWidget(self.right_panel, 4)
+        right_layout.setStretch(0, 8)   # camera frame
+        right_layout.setStretch(2, 2)   # logs list
         
         main_layout.addWidget(container)
         
@@ -796,10 +766,16 @@ class SentinelUI(QWidget):
         if frame is None:
             return
             
-        frame, names = detect_faces(frame)
+        try:
+            frame, names = detect_faces(frame)
+        except Exception:
+            names = []
         self.face_count_label.setText(f"👤 FACES: {len(names)}")
         
-        frame, objects = detect_objects(frame)
+        try:
+            frame, objects = detect_objects(frame)
+        except Exception:
+            objects = []
         unique_objects = sorted(set(objects))
         self.object_count_label.setText(f"📦 OBJECTS: {len(unique_objects)}")
         
@@ -807,9 +783,10 @@ class SentinelUI(QWidget):
         progress = min(100, len(unique_objects) * 10)
         self.progress_bar.set_target(progress)
         
-        self.objects_list.clear()
-        for obj in unique_objects:
-            self.objects_list.addItem(f"◉ {obj}")
+        if self.objects_list is not None:
+            self.objects_list.clear()
+            for obj in unique_objects:
+                self.objects_list.addItem(f"◉ {obj}")
             
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         h, w, ch = rgb.shape
@@ -903,6 +880,11 @@ class SentinelUI(QWidget):
         Thread(target=listen_loop, args=(self.send_command,), daemon=True).start()
         self.voice_started = True
         self.progress_bar.set_target(100)
+
+    def _startup_greeting(self):
+        greeting = "Hello, my name is Sentinel. What is your name?"
+        self.append_chat("Sentinel", greeting)
+        speak(greeting)
         
     def check_idle_thought(self):
         thought = idle_engine.check_idle()

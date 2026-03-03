@@ -11,6 +11,9 @@ CONFIDENCE_THRESHOLD = 0.5
 FPS_LIMIT = 10
 CAMERA_INDEX = 0
 YOLO_MODEL_NAME = "yolo26n.pt"  # your model
+# HOG fallback is expensive on CPU. Keep disabled by default for smooth UI.
+ENABLE_HOG_FALLBACK = os.getenv("ENABLE_HOG_FALLBACK", "0").strip() == "1"
+HOG_INTERVAL = max(1, int(os.getenv("HOG_INTERVAL", "6")))
 
 # Memory window for recent detections
 DETECTION_MEMORY = deque(maxlen=30)
@@ -25,7 +28,7 @@ face_cascade = cv2.CascadeClassifier(
 # YOLO setup (Ultralytics local)
 YOLO_AVAILABLE = False
 model = None
-vision_status = "Offline mode (face + people)"
+vision_status = "Offline mode (face only)"
 
 try:
     from ultralytics import YOLO
@@ -48,6 +51,8 @@ except Exception as e:
 # HOG fallback for people
 hog = cv2.HOGDescriptor()
 hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
+_hog_counter = 0
+_hog_last_objects = []
 
 
 # -------- THREAD SAFE CAMERA -------- #
@@ -130,16 +135,37 @@ def detect_with_yolo(frame):
 
 
 def detect_people_hog(frame):
-    rects, _ = hog.detectMultiScale(frame, winStride=(8, 8))
+    global _hog_counter, _hog_last_objects
+
+    # If fallback is disabled, keep camera fast.
+    if not ENABLE_HOG_FALLBACK:
+        return frame, []
+
+    _hog_counter += 1
+    if _hog_counter % HOG_INTERVAL != 0:
+        return frame, list(_hog_last_objects)
+
+    # Run on a smaller frame to reduce CPU load.
+    small = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
+    rects, _ = hog.detectMultiScale(small, winStride=(8, 8), padding=(8, 8), scale=1.05)
     objects = []
 
     for (x, y, w, h) in rects:
         objects.append("person")
+        x, y, w, h = int(x * 2), int(y * 2), int(w * 2), int(h * 2)
         cv2.rectangle(frame, (x, y), (x + w, y + h), (70, 170, 255), 2)
-        cv2.putText(frame, "person", (x, y - 10),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.6, (70, 170, 255), 2)
+        cv2.putText(
+            frame,
+            "person",
+            (x, y - 10),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.6,
+            (70, 170, 255),
+            2,
+        )
 
-    return frame, objects
+    _hog_last_objects = list(set(objects))
+    return frame, _hog_last_objects
 
 
 # -------- MAIN VISION LOOP -------- #
@@ -203,10 +229,13 @@ def detect_objects(frame):
     Main detection function that uses YOLO if available, otherwise falls back to HOG.
     Returns: (processed_frame, list_of_objects)
     """
-    if YOLO_AVAILABLE:
-        return detect_with_yolo(frame)
-    else:
+    try:
+        if YOLO_AVAILABLE:
+            return detect_with_yolo(frame)
         return detect_people_hog(frame)
+    except Exception as e:
+        print(f"[vision_engine] object detection failed: {e}")
+        return frame, []
 
 
 def get_vision_status():

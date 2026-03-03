@@ -359,38 +359,50 @@ def listen(timeout: int = 5, phrase_time_limit: int = 8):
 def listen_loop(command_callback=None):
     global INTRODUCED
 
-    device_index = _pick_microphone_index()
-    try:
-        mic_names = sr.Microphone.list_microphone_names()
-        picked_name = mic_names[device_index] if device_index is not None and device_index < len(mic_names) else "default"
-        memory.log_event(f"Voice input device: {picked_name} (index={device_index})")
-    except Exception:
-        memory.log_event("Voice input device: unknown")
+    while True:
+        device_index = _pick_microphone_index()
+        try:
+            mic_names = sr.Microphone.list_microphone_names()
+            picked_name = (
+                mic_names[device_index]
+                if device_index is not None and device_index < len(mic_names)
+                else "default"
+            )
+            memory.log_event(f"Voice input device: {picked_name} (index={device_index})")
+        except Exception:
+            memory.log_event("Voice input device: unknown")
 
-    with sr.Microphone(device_index=device_index) as source:
-        recognizer.adjust_for_ambient_noise(source, duration=0.7)
+        try:
+            with sr.Microphone(device_index=device_index) as source:
+                if getattr(source, "stream", None) is None:
+                    raise RuntimeError("Microphone stream is not available.")
 
-        if not INTRODUCED:
-            speak("Hello, my name is Sentinel. What is your name?")
-            INTRODUCED = True
+                recognizer.adjust_for_ambient_noise(source, duration=0.7)
 
-        while True:
-            try:
-                audio = recognizer.listen(source, timeout=3, phrase_time_limit=10)
-                text = _recognize_audio(audio)
-                if text is None:
-                    continue
-                if len(text) < 2:
-                    continue
+                if not INTRODUCED:
+                    speak("Hello, my name is Sentinel. What is your name?")
+                    INTRODUCED = True
 
-                if AUTONOMOUS_HEARING and command_callback:
-                    command_callback(text)
-                else:
-                    process_command(text)
-            except sr.WaitTimeoutError:
-                continue
-            except sr.UnknownValueError:
-                continue
-            except Exception as exc:
-                memory.log_event(f"Voice loop error: {exc}")
-                continue
+                while True:
+                    try:
+                        audio = recognizer.listen(source, timeout=3, phrase_time_limit=10)
+                        text = _recognize_audio(audio)
+                        if text is None:
+                            continue
+                        if len(text) < 2:
+                            continue
+
+                        if AUTONOMOUS_HEARING and command_callback:
+                            command_callback(text)
+                        else:
+                            process_command(text)
+                    except sr.WaitTimeoutError:
+                        continue
+                    except sr.UnknownValueError:
+                        continue
+                    except Exception as exc:
+                        memory.log_event(f"Voice loop error: {exc}")
+                        continue
+        except Exception as exc:
+            memory.log_event(f"Mic init error: {exc}")
+            time.sleep(1.5)
