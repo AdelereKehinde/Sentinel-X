@@ -18,23 +18,44 @@ AUTONOMOUS_HEARING = True
 
 _speaking_callback: Optional[Callable[[bool], None]] = None
 _ui_reply_callback: Optional[Callable[[str], None]] = None
+_currently_speaking = False
 
 
 speech_queue: Queue = Queue()
 
 recognizer = sr.Recognizer()
 recognizer.dynamic_energy_threshold = True
-recognizer.energy_threshold = 300
-recognizer.pause_threshold = 0.5
-recognizer.non_speaking_duration = 0.3
+recognizer.energy_threshold = int(os.getenv("SR_ENERGY_THRESHOLD", "140"))
+recognizer.pause_threshold = float(os.getenv("SR_PAUSE_THRESHOLD", "0.8"))
+recognizer.non_speaking_duration = float(os.getenv("SR_NON_SPEAKING_DURATION", "0.35"))
 
 engine = pyttsx3.init()
-engine.setProperty("rate", 175)
+engine.setProperty("rate", int(os.getenv("VOICE_RATE", "155")))
 engine.setProperty("volume", 1.0)
 
 voices = engine.getProperty("voices")
 if voices:
-    engine.setProperty("voice", voices[0].id)
+    preferred = os.getenv("VOICE_NAME", "").strip().lower()
+    chosen = None
+    if preferred:
+        for v in voices:
+            if preferred in (v.name or "").lower():
+                chosen = v
+                break
+    if chosen is None:
+        # Prefer clearer conversational Windows voices when available.
+        preferred_keywords = ["zira", "david", "hazel", "aria", "jenny", "guy"]
+        for key in preferred_keywords:
+            for v in voices:
+                name = (v.name or "").lower()
+                if key in name:
+                    chosen = v
+                    break
+            if chosen is not None:
+                break
+    if chosen is None:
+        chosen = voices[0]
+    engine.setProperty("voice", chosen.id)
 
 INTRODUCED = False
 LAST_RECOGNITION_ERROR_ANNOUNCE = 0.0
@@ -71,12 +92,14 @@ def _notify_speaking(state: bool):
 
 
 def _speech_worker():
+    global _currently_speaking
     while True:
         text = speech_queue.get()
         if text is None:
             continue
 
         try:
+            _currently_speaking = True
             _notify_speaking(True)
             engine.stop()
             engine.say(text)
@@ -85,6 +108,7 @@ def _speech_worker():
             print("TTS error:", exc)
         finally:
             _notify_speaking(False)
+            _currently_speaking = False
             speech_queue.task_done()
 
 
@@ -114,7 +138,14 @@ def speak(text: str, interrupt: bool = True):
         except Exception:
             pass
 
-    max_len = 240
+    # Add gentle pacing so replies sound conversational, not rushed.
+    clean = (
+        clean.replace("...", ". ")
+        .replace(" - ", ", ")
+        .replace(";", ". ")
+    )
+
+    max_len = 220
     parts = [p.strip() for p in re.split(r"(?<=[.!?])\s+", clean) if p.strip()]
     if not parts:
         parts = [clean]
@@ -209,6 +240,41 @@ def _pick_microphone_index() -> Optional[int]:
     preferred.sort(reverse=True)
     best_score, best_index = preferred[0]
     return best_index if best_score > -1 else None
+
+
+def _microphone_candidates() -> list[Optional[int]]:
+    mic_index = os.getenv("MIC_INDEX")
+    if mic_index and mic_index.isdigit():
+        return [int(mic_index)]
+
+    try:
+        names = sr.Microphone.list_microphone_names()
+    except Exception:
+        return [None]
+
+    scored: list[tuple[int, int]] = []
+    for i, raw_name in enumerate(names):
+        name = (raw_name or "").lower()
+        score = 0
+        if "microphone" in name or "mic" in name:
+            score += 6
+        if "realtek" in name:
+            score += 2
+        if "usb" in name:
+            score += 2
+        if "stereo mix" in name:
+            score -= 8
+        if "output" in name or "speaker" in name:
+            score -= 6
+        if "mapper" in name:
+            score -= 3
+        scored.append((score, i))
+
+    scored.sort(reverse=True)
+    candidates = [i for score, i in scored if score >= 0]
+    if None not in candidates:
+        candidates.append(None)
+    return candidates[:6]
 
 
 def process_command(command: str):
@@ -360,49 +426,57 @@ def listen_loop(command_callback=None):
     global INTRODUCED
 
     while True:
-        device_index = _pick_microphone_index()
-        try:
-            mic_names = sr.Microphone.list_microphone_names()
-            picked_name = (
-                mic_names[device_index]
-                if device_index is not None and device_index < len(mic_names)
-                else "default"
-            )
-            memory.log_event(f"Voice input device: {picked_name} (index={device_index})")
-        except Exception:
-            memory.log_event("Voice input device: unknown")
+        for device_index in _microphone_candidates():
+            try:
+                mic_names = sr.Microphone.list_microphone_names()
+                picked_name = (
+                    mic_names[device_index]
+                    if device_index is not None and device_index < len(mic_names)
+                    else "default"
+                )
+                memory.log_event(f"Voice input device: {picked_name} (index={device_index})")
+            except Exception:
+                memory.log_event("Voice input device: unknown")
 
-        try:
-            with sr.Microphone(device_index=device_index) as source:
-                if getattr(source, "stream", None) is None:
-                    raise RuntimeError("Microphone stream is not available.")
+            try:
+                with sr.Microphone(device_index=device_index) as source:
+                    if getattr(source, "stream", None) is None:
+                        raise RuntimeError("Microphone stream is not available.")
 
-                recognizer.adjust_for_ambient_noise(source, duration=0.7)
+                    recognizer.adjust_for_ambient_noise(source, duration=0.6)
 
-                if not INTRODUCED:
-                    speak("Hello, my name is Sentinel. What is your name?")
-                    INTRODUCED = True
+                    if not INTRODUCED:
+                        speak("Hello, my name is Sentinel. What is your name?")
+                        INTRODUCED = True
 
-                while True:
-                    try:
-                        audio = recognizer.listen(source, timeout=3, phrase_time_limit=10)
-                        text = _recognize_audio(audio)
-                        if text is None:
+                    while True:
+                        try:
+                            # Prevent the recognizer from transcribing Sentinel's own voice.
+                            if _currently_speaking or not speech_queue.empty():
+                                time.sleep(0.2)
+                                continue
+
+                            audio = recognizer.listen(source, timeout=4, phrase_time_limit=12)
+                            text = _recognize_audio(audio)
+                            if text is None:
+                                continue
+                            if len(text) < 2:
+                                continue
+
+                            memory.log_event(f"Heard: {text}")
+                            if AUTONOMOUS_HEARING and command_callback:
+                                command_callback(text)
+                            else:
+                                process_command(text)
+                        except sr.WaitTimeoutError:
                             continue
-                        if len(text) < 2:
+                        except sr.UnknownValueError:
                             continue
+                        except Exception as exc:
+                            memory.log_event(f"Voice loop error: {exc}")
+                            continue
+            except Exception as exc:
+                memory.log_event(f"Mic init error: {exc}")
+                continue
 
-                        if AUTONOMOUS_HEARING and command_callback:
-                            command_callback(text)
-                        else:
-                            process_command(text)
-                    except sr.WaitTimeoutError:
-                        continue
-                    except sr.UnknownValueError:
-                        continue
-                    except Exception as exc:
-                        memory.log_event(f"Voice loop error: {exc}")
-                        continue
-        except Exception as exc:
-            memory.log_event(f"Mic init error: {exc}")
-            time.sleep(1.5)
+        time.sleep(1.0)

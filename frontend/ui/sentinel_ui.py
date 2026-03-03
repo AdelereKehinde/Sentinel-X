@@ -502,6 +502,7 @@ class SentinelUI(QWidget):
         self.send_btn.clicked.connect(self.on_send_clicked)
         cmd_layout.addWidget(self.send_btn)
         left_layout.addLayout(cmd_layout)
+        left_layout.setStretchFactor(self.chat_history, 6)
         
         # Right Panel
         self.right_panel = QFrame()
@@ -531,7 +532,10 @@ class SentinelUI(QWidget):
         
         self.camera_label = QLabel("INITIALIZING CAMERA...")
         self.camera_label.setAlignment(Qt.AlignCenter)
-        self.camera_label.setMinimumSize(900, 560)
+        # Keep camera as a square panel on the right side.
+        self.camera_label.setMinimumSize(560, 560)
+        self.camera_label.setMaximumSize(900, 900)
+        self.camera_label.setScaledContents(True)
         self.camera_label.setStyleSheet("""
             border: 1px solid #3060a0;
             border-radius: 20px;
@@ -542,30 +546,7 @@ class SentinelUI(QWidget):
         camera_layout.addWidget(self.camera_label)
         right_layout.addWidget(camera_frame)
         self.objects_list = None
-        
-        # Recent logs
-        logs_label = QLabel("📜 SYSTEM LOGS")
-        logs_label.setStyleSheet("color: #80d0ff; font-size: 14px;")
-        right_layout.addWidget(logs_label)
-        
-        self.logs_list = QListWidget()
-        self.logs_list.setStyleSheet("""
-            QListWidget {
-                background: rgba(0, 20, 40, 200);
-                border: 2px solid #3060c0;
-                border-radius: 15px;
-                color: #a0e0ff;
-                padding: 10px;
-                font-size: 11px;
-                font-family: 'Courier New';
-            }
-            QListWidget::item {
-                padding: 3px;
-                border-bottom: 1px solid #204080;
-            }
-        """)
-        self.logs_list.setMinimumHeight(190)
-        right_layout.addWidget(self.logs_list)
+        self.logs_list = None
         
         # Set glass panel style
         for panel in [self.left_panel, self.right_panel]:
@@ -581,10 +562,10 @@ class SentinelUI(QWidget):
                 }
             """)
         
-        root.addWidget(self.left_panel, 2)
-        root.addWidget(self.right_panel, 4)
-        right_layout.setStretch(0, 8)   # camera frame
-        right_layout.setStretch(2, 2)   # logs list
+        # Give conversation more space while keeping a square camera panel.
+        root.addWidget(self.left_panel, 3)
+        root.addWidget(self.right_panel, 2)
+        right_layout.setStretch(0, 1)
         
         main_layout.addWidget(container)
         
@@ -885,6 +866,11 @@ class SentinelUI(QWidget):
         greeting = "Hello, my name is Sentinel. What is your name?"
         self.append_chat("Sentinel", greeting)
         speak(greeting)
+        try:
+            import ai_modules.voice_engine as ve
+            ve.INTRODUCED = True
+        except Exception:
+            pass
         
     def check_idle_thought(self):
         thought = idle_engine.check_idle()
@@ -920,12 +906,8 @@ class SentinelUI(QWidget):
         self.user_label.setText(f"USER: {user_name.upper()}")
         
     def refresh_logs(self):
-        logs = memory.get_logs()[-12:]
-        self.logs_list.clear()
-        for item in reversed(logs):
-            time_str = item['time'] if 'time' in item else datetime.now().strftime("%H:%M:%S")
-            event_str = item['event'][:40] + "..." if len(item['event']) > 40 else item['event']
-            self.logs_list.addItem(f"⚡ {time_str} | {event_str}")
+        # Logs panel removed from UI.
+        return
             
     def closeEvent(self, event):
         camera.stop()
