@@ -7,82 +7,71 @@ from dotenv import load_dotenv
 BACKEND_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = BACKEND_DIR.parent
 load_dotenv(BACKEND_DIR / ".env")
-load_dotenv(PROJECT_ROOT / "frontend" / ".env")
+load_dotenv(PROJECT_ROOT / "backend" / ".env")
 
-API_KEY = os.getenv("GEMINI_API_KEY")
-MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash-preview-04-17")
+API_KEY = os.getenv("OPENROUTER_API_KEY")
+MODEL = os.getenv("OPENROUTER_MODEL", "openai/gpt-4o-mini")
 
 try:
-    MAX_TOKENS = int(os.getenv("MAX_TOKENS", "700"))
+    MAX_TOKENS = int(os.getenv("MAX_TOKENS", "900"))
 except ValueError:
-    MAX_TOKENS = 700
+    MAX_TOKENS = 900
+
+OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 SYSTEM_PROMPT = """
 You are Sentinel Prime, a desktop AI voice assistant.
 Rules:
-- Speak like a natural person, not a formal AI.
-- Give useful detail by default: normally 3-6 short sentences.
-- Avoid jargon and long disclaimers.
-- Be practical and direct.
-- If asked your name, say you are Sentinel.
-- Do not just echo the user's words. Answer the actual question clearly.
+- Reply in a natural human way, not robotic.
+- Give moderate detail by default: around 5-8 sentences.
+- Keep answers practical, clear, and helpful.
+- Avoid long disclaimers and avoid sounding like generic AI text.
+- If asked your name, say your name is Sentinel.
 """
 
 
 def ask_brain(user_input: str) -> str:
     if not API_KEY:
-        raise RuntimeError("Missing GEMINI_API_KEY in environment.")
+        raise RuntimeError("Missing OPENROUTER_API_KEY in environment.")
 
-    url = (
-        f"https://generativelanguage.googleapis.com/v1/models/{MODEL}:generateContent"
-        f"?key={API_KEY}"
-    )
+    headers = {
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json",
+    }
 
-    # IMPORTANT: For Gemini 2.5, system prompt goes in the user message content
-    # or use a separate approach
     payload = {
-        "contents": [
-            {
-                "role": "user",
-                "parts": [
-                    {"text": f"{SYSTEM_PROMPT}\n\nUser query: {user_input}"}
-                ],
-            }
+        "model": MODEL,
+        "messages": [
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": user_input},
         ],
-        "generationConfig": {
-            "maxOutputTokens": MAX_TOKENS,
-            "temperature": 0.7,
-            "topP": 0.9,
-        },
+        "max_tokens": MAX_TOKENS,
+        "temperature": 0.7,
+        "top_p": 0.9,
     }
 
     try:
-        response = requests.post(url, json=payload, timeout=30)
+        response = requests.post(OPENROUTER_URL, headers=headers, json=payload, timeout=35)
     except requests.RequestException as exc:
-        raise RuntimeError(f"Failed to reach Gemini: {exc}") from exc
+        raise RuntimeError(f"Failed to reach OpenRouter: {exc}") from exc
 
     try:
         result = response.json()
     except ValueError as exc:
         raise RuntimeError(
-            f"Gemini returned non-JSON response (status {response.status_code})."
+            f"OpenRouter returned non-JSON response (status {response.status_code})."
         ) from exc
 
     if response.status_code >= 400:
-        message = result.get("error", {}).get("message") or result
-        raise RuntimeError(f"Gemini request failed (status {response.status_code}): {message}")
+        message = result.get("error", {}).get("message") or result.get("message") or result
+        raise RuntimeError(f"OpenRouter request failed (status {response.status_code}): {message}")
 
-    candidates = result.get("candidates") or []
-    if not candidates:
-        raise RuntimeError(f"Gemini response missing candidates: {result}")
+    choices = result.get("choices") or []
+    if not choices:
+        raise RuntimeError(f"OpenRouter response missing choices: {result}")
 
-    # Extract text from response
-    try:
-        content = candidates[0].get("content", {})
-        parts = content.get("parts", [])
-        text = "".join(part.get("text", "") for part in parts if isinstance(part, dict))
-        return text.strip()
-    except Exception as e:
-        raise RuntimeError(f"Failed to parse response: {e}\nResponse: {result}")
-    
-    return ""
+    text = choices[0].get("message", {}).get("content", "").strip()
+    if not text:
+        raise RuntimeError("OpenRouter response missing message content.")
+
+    return text
